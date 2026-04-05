@@ -23,7 +23,7 @@ exports.AuthModule = AuthModule = __decorate([
         imports: [
             passport_1.PassportModule,
             jwt_1.JwtModule.register({
-                secret: 'hm-program-secret-key',
+                secret: process.env.JWT_SECRET,
                 signOptions: { expiresIn: '7d' },
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
