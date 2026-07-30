@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { GetCodeDto } from './dto/get-code.dto';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { ResetDto } from './dto/reset.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -24,5 +25,11 @@ export class AuthController {
   @Post('login')
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto.phoneNumber, loginDto.code);
+  }
+
+  // 找回密码
+  @Post('reset')
+  reset(@Body() resetDto: ResetDto) {
+    return this.authService.reset(resetDto.phoneNumber, resetDto.code);
   }
 }
