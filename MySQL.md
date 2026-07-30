@@ -42,6 +42,17 @@
 | create_at | DATETIME | 创建时间,默认当前时间 |
 | update_at | DATETIME | 更新时间,默认值是创建时间 |
 
+**allergy**
+
+| 字段名 | 数据类型 | 说明 |
+| --- |
+| id | INT PRIMARY KEY AUTO_INCREMENT | 主键,自增 |
+| baby_id | INT | 宝宝ID,外键,关联宝宝 |
+
+**medical_record**
+
+
+**growth_record**
 ## API 接口
 
 Base URL: `http://localhost:3000`
