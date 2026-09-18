@@ -1,0 +1,253 @@
+CMake Error at build/common/modules/Zlib.cmake:85 (message):
+  Building zlib Failed!
+Call Stack (most recent call first):
+  CMakeLists.txt:178 (include)
+
+
+cmake version 3.22.1
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+1.10.1
+gcc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Python 3.10.12
+[2026-09-12 11:10:03] [cjpm_build] [INFO] args: Namespace(build_type=release, build_stage=preBuild, jobs=0, target=None, target_lib=[], target_toolchain=None, include=[], target_sysroot=None, stdlib_coverage=False, cjpm=False, build_args=[], without_effect_handlers=False, host=None, prefix=None, func=<function build at 0x7f89c50e8ee0>)
+[2026-09-12 11:10:03] [cjpm_build] [INFO] CJPM_DIR: /home/ubuntu/github/changxi-backend
+[2026-09-12 11:10:03] [cjpm_build] [INFO] args.build_stage: preBuild
+[2026-09-12 11:10:03] [cjpm_build] [INFO] DEVECO_OH_NATIVE_HOME: 
+[2026-09-12 11:10:03] [cjpm_build] [INFO] begin clean...
+
+[2026-09-12 11:10:03] [cjpm_build] [INFO] end clean
+
+[2026-09-12 11:10:03] [cjpm_build] [INFO] begin clean libs...
+
+[2026-09-12 11:10:03] [cjpm_build] [INFO] end clean libs
+
+[2026-09-12 11:10:03] [cjpm_build] [INFO] begin build py----
+[2026-09-12 11:10:03] [cjpm_build] [INFO] cmake_build_dir: /home/ubuntu/Developer/cangjie_stdx/build_temp/build
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- The C compiler identification is GNU 11.4.0
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- The CXX compiler identification is GNU 11.4.0
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Detecting C compiler ABI info
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Detecting C compiler ABI info - done
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Check for working C compiler: /usr/bin/gcc - skipped
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Detecting C compile features
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Detecting C compile features - done
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Detecting CXX compiler ABI info
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Detecting CXX compiler ABI info - done
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Check for working CXX compiler: /usr/bin/g++ - skipped
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Detecting CXX compile features
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Detecting CXX compile features - done
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Build type for the current project: Release
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- <CMAKE_AR> deterministic mode (-D) is set.
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- <CMAKE_RANLIB> deterministic mode (-D) is set.
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Building with target=x86_64-linux-gnu
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found suitable version "3.0.2", minimum required is "3") found components: Crypto SSL
+[2026-09-12 11:10:03] [cjpm_build] [INFO] -- Configuring zlib library...
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Building zlib libraries...
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- -- The C compiler identification is GNU 11.4.0
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Detecting C compiler ABI info
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Detecting C compiler ABI info - done
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Check for working C compiler: /usr/bin/gcc - skipped
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Detecting C compile features
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Detecting C compile features - done
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for sys/types.h
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for sys/types.h - not found
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for stdint.h
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for stdint.h - not found
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for stddef.h
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for stddef.h - not found
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Check size of off64_t
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Check size of off64_t - failed
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for fseeko
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for fseeko - not found
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for unistd.h
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Looking for unistd.h - not found
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Configuring done
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Generating done
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Build files have been written to: /home/ubuntu/Developer/cangjie_stdx/build_temp/build/third_party/zlib-build
+[2026-09-12 11:10:04] [cjpm_build] [INFO] 
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- CMake Warning:
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   Manually-specified variables were not used by the project:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] 
+[2026-09-12 11:10:04] [cjpm_build] [INFO]     CANGJIE_TARGET_TOOLCHAIN
+[2026-09-12 11:10:04] [cjpm_build] [INFO]     CMAKE_ANDROID_NDK
+[2026-09-12 11:10:04] [cjpm_build] [INFO]     CMAKE_INSTALL_LIBDIR
+[2026-09-12 11:10:04] [cjpm_build] [INFO] 
+[2026-09-12 11:10:04] [cjpm_build] [INFO] 
+[2026-09-12 11:10:04] [cjpm_build] [INFO] 
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- [1/37] Building C object CMakeFiles/zlib.dir/gzclose.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] FAILED: CMakeFiles/zlib.dir/gzclose.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /usr/bin/gcc -DNO_FSEEKO -DZLIB_DLL -I/home/ubuntu/Developer/cangjie_stdx/build_temp/build/third_party/zlib-build -I/home/ubuntu/Developer/cangjie_stdx/third_party/zlib -Wall -Wsign-compare -Werror -Wdate-time -fsigned-char -fno-omit-frame-pointer -pipe -fno-common -fno-strict-aliasing -fstack-protector-all -Wextra -Wno-implicit-function-declaration -Wno-unused-parameter -Wformat=2 -Wno-format-nonliteral -Wstrict-prototypes -Wframe-larger-than=100000 -Wvla -Wunused -Wnon-virtual-dtor -Wdelete-non-virtual-dtor -Woverloaded-virtual -Wconversion -Wno-shorten-64-to-32 -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-string-conversion -Wfloat-equal -std=gnu11 -Wshadow -D_FORTIFY_SOURCE=2 -O2 -fPIC -MD -MT CMakeFiles/zlib.dir/gzclose.c.o -MF CMakeFiles/zlib.dir/gzclose.c.o.d -o CMakeFiles/zlib.dir/gzclose.c.o -c /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/gzclose.c
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wnon-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wdelete-non-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Woverloaded-virtual is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-string-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-implicit-int-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-shorten-64-to-32 may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: all warnings being treated as errors
+[2026-09-12 11:10:04] [cjpm_build] [INFO] [2/37] Building C object CMakeFiles/zlib.dir/compress.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] FAILED: CMakeFiles/zlib.dir/compress.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /usr/bin/gcc -DNO_FSEEKO -DZLIB_DLL -I/home/ubuntu/Developer/cangjie_stdx/build_temp/build/third_party/zlib-build -I/home/ubuntu/Developer/cangjie_stdx/third_party/zlib -Wall -Wsign-compare -Werror -Wdate-time -fsigned-char -fno-omit-frame-pointer -pipe -fno-common -fno-strict-aliasing -fstack-protector-all -Wextra -Wno-implicit-function-declaration -Wno-unused-parameter -Wformat=2 -Wno-format-nonliteral -Wstrict-prototypes -Wframe-larger-than=100000 -Wvla -Wunused -Wnon-virtual-dtor -Wdelete-non-virtual-dtor -Woverloaded-virtual -Wconversion -Wno-shorten-64-to-32 -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-string-conversion -Wfloat-equal -std=gnu11 -Wshadow -D_FORTIFY_SOURCE=2 -O2 -fPIC -MD -MT CMakeFiles/zlib.dir/compress.c.o -MF CMakeFiles/zlib.dir/compress.c.o.d -o CMakeFiles/zlib.dir/compress.c.o -c /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/compress.c
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wnon-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wdelete-non-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Woverloaded-virtual is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-string-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-implicit-int-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-shorten-64-to-32 may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: all warnings being treated as errors
+[2026-09-12 11:10:04] [cjpm_build] [INFO] [3/37] Building C object CMakeFiles/zlib.dir/crc32.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] FAILED: CMakeFiles/zlib.dir/crc32.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /usr/bin/gcc -DNO_FSEEKO -DZLIB_DLL -I/home/ubuntu/Developer/cangjie_stdx/build_temp/build/third_party/zlib-build -I/home/ubuntu/Developer/cangjie_stdx/third_party/zlib -Wall -Wsign-compare -Werror -Wdate-time -fsigned-char -fno-omit-frame-pointer -pipe -fno-common -fno-strict-aliasing -fstack-protector-all -Wextra -Wno-implicit-function-declaration -Wno-unused-parameter -Wformat=2 -Wno-format-nonliteral -Wstrict-prototypes -Wframe-larger-than=100000 -Wvla -Wunused -Wnon-virtual-dtor -Wdelete-non-virtual-dtor -Woverloaded-virtual -Wconversion -Wno-shorten-64-to-32 -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-string-conversion -Wfloat-equal -std=gnu11 -Wshadow -D_FORTIFY_SOURCE=2 -O2 -fPIC -MD -MT CMakeFiles/zlib.dir/crc32.c.o -MF CMakeFiles/zlib.dir/crc32.c.o.d -o CMakeFiles/zlib.dir/crc32.c.o -c /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/crc32.c
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wnon-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wdelete-non-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Woverloaded-virtual is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/crc32.c: In function crc32_z:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/crc32.c:769:20: error: conversion from long unsigned int to z_crc_t {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   769 |             crc0 = crc;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                    ^~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/crc32.c: In function crc32_combine64:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/crc32.c:1036:39: error: conversion from uLong {aka long unsigned int} to z_crc_t {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1036 |     return multmodp(x2nmodp(len2, 3), crc1) ^ (crc2 & 0xffffffff);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                       ^~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/crc32.c: In function crc32_combine_op:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/crc32.c:1059:21: error: conversion from uLong {aka long unsigned int} to z_crc_t {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1059 |     return multmodp(op, crc1) ^ (crc2 & 0xffffffff);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                     ^~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/crc32.c:1059:25: error: conversion from uLong {aka long unsigned int} to z_crc_t {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1059 |     return multmodp(op, crc1) ^ (crc2 & 0xffffffff);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                         ^~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/crc32.c: At top level:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-string-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-implicit-int-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-shorten-64-to-32 may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: all warnings being treated as errors
+[2026-09-12 11:10:04] [cjpm_build] [INFO] [4/37] Building C object CMakeFiles/zlib.dir/adler32.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] FAILED: CMakeFiles/zlib.dir/adler32.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /usr/bin/gcc -DNO_FSEEKO -DZLIB_DLL -I/home/ubuntu/Developer/cangjie_stdx/build_temp/build/third_party/zlib-build -I/home/ubuntu/Developer/cangjie_stdx/third_party/zlib -Wall -Wsign-compare -Werror -Wdate-time -fsigned-char -fno-omit-frame-pointer -pipe -fno-common -fno-strict-aliasing -fstack-protector-all -Wextra -Wno-implicit-function-declaration -Wno-unused-parameter -Wformat=2 -Wno-format-nonliteral -Wstrict-prototypes -Wframe-larger-than=100000 -Wvla -Wunused -Wnon-virtual-dtor -Wdelete-non-virtual-dtor -Woverloaded-virtual -Wconversion -Wno-shorten-64-to-32 -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-string-conversion -Wfloat-equal -std=gnu11 -Wshadow -D_FORTIFY_SOURCE=2 -O2 -fPIC -MD -MT CMakeFiles/zlib.dir/adler32.c.o -MF CMakeFiles/zlib.dir/adler32.c.o.d -o CMakeFiles/zlib.dir/adler32.c.o -c /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/adler32.c
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wnon-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wdelete-non-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Woverloaded-virtual is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-string-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-implicit-int-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-shorten-64-to-32 may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: all warnings being treated as errors
+[2026-09-12 11:10:04] [cjpm_build] [INFO] [5/37] Building C object CMakeFiles/zlib.dir/gzlib.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] FAILED: CMakeFiles/zlib.dir/gzlib.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /usr/bin/gcc -DNO_FSEEKO -DZLIB_DLL -I/home/ubuntu/Developer/cangjie_stdx/build_temp/build/third_party/zlib-build -I/home/ubuntu/Developer/cangjie_stdx/third_party/zlib -Wall -Wsign-compare -Werror -Wdate-time -fsigned-char -fno-omit-frame-pointer -pipe -fno-common -fno-strict-aliasing -fstack-protector-all -Wextra -Wno-implicit-function-declaration -Wno-unused-parameter -Wformat=2 -Wno-format-nonliteral -Wstrict-prototypes -Wframe-larger-than=100000 -Wvla -Wunused -Wnon-virtual-dtor -Wdelete-non-virtual-dtor -Woverloaded-virtual -Wconversion -Wno-shorten-64-to-32 -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-string-conversion -Wfloat-equal -std=gnu11 -Wshadow -D_FORTIFY_SOURCE=2 -O2 -fPIC -MD -MT CMakeFiles/zlib.dir/gzlib.c.o -MF CMakeFiles/zlib.dir/gzlib.c.o.d -o CMakeFiles/zlib.dir/gzlib.c.o -c /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/gzlib.c
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wnon-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wdelete-non-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Woverloaded-virtual is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-string-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-implicit-int-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-shorten-64-to-32 may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: all warnings being treated as errors
+[2026-09-12 11:10:04] [cjpm_build] [INFO] [6/37] Building C object CMakeFiles/zlib.dir/deflate.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] FAILED: CMakeFiles/zlib.dir/deflate.c.o
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /usr/bin/gcc -DNO_FSEEKO -DZLIB_DLL -I/home/ubuntu/Developer/cangjie_stdx/build_temp/build/third_party/zlib-build -I/home/ubuntu/Developer/cangjie_stdx/third_party/zlib -Wall -Wsign-compare -Werror -Wdate-time -fsigned-char -fno-omit-frame-pointer -pipe -fno-common -fno-strict-aliasing -fstack-protector-all -Wextra -Wno-implicit-function-declaration -Wno-unused-parameter -Wformat=2 -Wno-format-nonliteral -Wstrict-prototypes -Wframe-larger-than=100000 -Wvla -Wunused -Wnon-virtual-dtor -Wdelete-non-virtual-dtor -Woverloaded-virtual -Wconversion -Wno-shorten-64-to-32 -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-string-conversion -Wfloat-equal -std=gnu11 -Wshadow -D_FORTIFY_SOURCE=2 -O2 -fPIC -MD -MT CMakeFiles/zlib.dir/deflate.c.o -MF CMakeFiles/zlib.dir/deflate.c.o.d -o CMakeFiles/zlib.dir/deflate.c.o -c /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wnon-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Wdelete-non-virtual-dtor is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: error: command-line option -Woverloaded-virtual is valid for C++/ObjC++ but not for C [-Werror]
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c: In function deflatePending:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:721:20: error: conversion from ulg {aka long unsigned int} to unsigned int may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   721 |         *pending = strm->state->pending;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                    ^~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c: In function flush_pending:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:928:11: error: conversion from ulg {aka long unsigned int} to unsigned int may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   928 |     len = s->pending;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |           ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c: In function deflate:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1085:38: error: conversion from ulg {aka long unsigned int} to uInt {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1085 |                                     s->pending);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                     ~^~~~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1093:25: error: conversion from ulg {aka long unsigned int} to uInt {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1093 |             uInt left = (s->gzhead->extra_len & 0xffff) - s->gzindex;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                         ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1095:29: error: conversion from ulg {aka long unsigned int} to uInt {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1095 |                 uInt copy = s->pending_buf_size - s->pending;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                             ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:950:44: error: conversion from ulg {aka long unsigned int} to uInt {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   950 |                                 s->pending - (beg)); \
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                 ~~~~~~~~~~~^~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1099:17: note: in expansion of macro HCRC_UPDATE
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1099 |                 HCRC_UPDATE(beg);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                 ^~~~~~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:950:44: error: conversion from ulg {aka long unsigned int} to uInt {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   950 |                                 s->pending - (beg)); \
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                 ~~~~~~~~~~~^~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1112:13: note: in expansion of macro HCRC_UPDATE
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1112 |             HCRC_UPDATE(beg);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |             ^~~~~~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:950:44: error: conversion from ulg {aka long unsigned int} to uInt {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   950 |                                 s->pending - (beg)); \
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                 ~~~~~~~~~~~^~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1123:21: note: in expansion of macro HCRC_UPDATE
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1123 |                     HCRC_UPDATE(beg);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                     ^~~~~~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:950:44: error: conversion from ulg {aka long unsigned int} to uInt {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   950 |                                 s->pending - (beg)); \
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                 ~~~~~~~~~~~^~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1134:13: note: in expansion of macro HCRC_UPDATE
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1134 |             HCRC_UPDATE(beg);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |             ^~~~~~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:950:44: error: conversion from ulg {aka long unsigned int} to uInt {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   950 |                                 s->pending - (beg)); \
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                 ~~~~~~~~~~~^~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1145:21: note: in expansion of macro HCRC_UPDATE
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1145 |                     HCRC_UPDATE(beg);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                     ^~~~~~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:950:44: error: conversion from ulg {aka long unsigned int} to uInt {aka unsigned int} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]   950 |                                 s->pending - (beg)); \
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                 ~~~~~~~~~~~^~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1156:13: note: in expansion of macro HCRC_UPDATE
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1156 |             HCRC_UPDATE(beg);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |             ^~~~~~~~~~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c: In function deflate_stored:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1621:19: error: conversion from ulg {aka long unsigned int} to unsigned int may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1621 | #define MIN(a, b) ((a) > (b) ? (b) : (a))
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                   ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1644:26: note: in expansion of macro MIN
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1644 |     unsigned min_block = MIN(s->pending_buf_size - 5, s->w_size);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                          ^~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1663:16: error: conversion from long int to unsigned int may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1663 |         left = s->strstart - s->block_start;    /* bytes left in window */
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1686:42: error: conversion from unsigned int to Bytef {aka unsigned char} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1686 |         s->pending_buf[s->pending - 4] = len;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                          ^~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1687:42: error: conversion from unsigned int to Bytef {aka unsigned char} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1687 |         s->pending_buf[s->pending - 3] = len >> 8;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                          ^~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1688:42: error: conversion from unsigned int to Bytef {aka unsigned char} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1688 |         s->pending_buf[s->pending - 2] = ~len;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                          ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1689:42: error: conversion from unsigned int to Bytef {aka unsigned char} may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1689 |         s->pending_buf[s->pending - 1] = ~len >> 8;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                                          ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1769:12: error: conversion from ulg {aka long unsigned int} to unsigned int may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1769 |     have = s->window_size - s->strstart;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |            ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1621:19: error: conversion from ulg {aka long unsigned int} to unsigned int may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1621 | #define MIN(a, b) ((a) > (b) ? (b) : (a))
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |                   ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1798:12: note: in expansion of macro MIN
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1798 |     have = MIN(s->pending_buf_size - have, MAX_STORED);
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |            ^~~
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c:1800:12: error: conversion from long int to unsigned int may change value [-Werror=conversion]
+[2026-09-12 11:10:04] [cjpm_build] [INFO]  1800 |     left = s->strstart - s->block_start;
+[2026-09-12 11:10:04] [cjpm_build] [INFO]       |            ^
+[2026-09-12 11:10:04] [cjpm_build] [INFO] /home/ubuntu/Developer/cangjie_stdx/third_party/zlib/deflate.c: At top level:
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-string-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-implicit-int-conversion may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: note: unrecognized command-line option -Wno-shorten-64-to-32 may have been intended to silence earlier diagnostics
+[2026-09-12 11:10:04] [cjpm_build] [INFO] cc1: all warnings being treated as errors
+[2026-09-12 11:10:04] [cjpm_build] [INFO] ninja: build stopped: subcommand failed.
+[2026-09-12 11:10:04] [cjpm_build] [INFO] 
+[2026-09-12 11:10:04] [cjpm_build] [INFO] --
+[2026-09-12 11:10:04] [cjpm_build] [INFO] -- Configuring incomplete, errors occurred!
+[2026-09-12 11:10:04] [cjpm_build] [INFO] See also "/home/ubuntu/Developer/cangjie_stdx/build_temp/build/CMakeFiles/CMakeOutput.log".
+[2026-09-12 11:10:04] [cjpm_build] [INFO] See also "/home/ubuntu/Developer/cangjie_stdx/build_temp/build/CMakeFiles/CMakeError.log".
+[2026-09-12 11:10:04] [cjpm_build] [ERROR] build error: 1!
+

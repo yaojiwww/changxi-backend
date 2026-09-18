@@ -1,0 +1,19 @@
+# 编译产物
+target/
+build/
+output/
+
+# Docker 构建资源（体积大，且可从官方重新下载，绝不入库）
+docker/
+# 复制进来的天擎框架依赖（通过 SPIRE_PATH 引用，不入库）
+spire/
+# 复制进来的数据库驱动（通过本地路径依赖引用，不入库）
+mariadb_driver/
+
+# 本地配置与密钥（从现在起就防着）
+*.local.toml
+.env
+config/secret*
+
+# 系统垃圾文件
+.DS_Store
