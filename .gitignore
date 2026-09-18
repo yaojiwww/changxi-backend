@@ -17,3 +17,7 @@ config/secret*
 
 # 系统垃圾文件
 .DS_Store
+
+# 开发环境配置文件
+.vscode/
+。qoder/
