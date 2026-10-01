@@ -16,7 +16,7 @@ main(args: Array<String>): Int64 {
     // 健康检查：部署后用它确认服务活着
     app.mapGet("/hello") { ctx =>
         ctx.response.contentType = "text/plain; charset=utf-8"
-        ctx.response.write("畅溪后端已就绪")
+        ctx.response.write("changxi 后端已就绪")
     }
 
     // 业务路由按接口文档逐域接入：认证域 → 业务域

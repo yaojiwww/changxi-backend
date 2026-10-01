@@ -2,7 +2,7 @@
   cjc-version = "1.1.3"
   name = "changxi_backend"
   organization = ""
-  description = "畅溪鸿蒙APP后端服务"
+  description = ""
   version = "1.0.0"
   target-dir = ""
   script-dir = ""
@@ -19,10 +19,11 @@
   soulsoft_extensions_options   = { path = "${SPIRE_PATH}soulsoft_extensions_options" }
   soulsoft_extensions_injection = { path = "${SPIRE_PATH}soulsoft_extensions_injection" }
   soulsoft_extensions_logging   = { path = "${SPIRE_PATH}soulsoft_extensions_logging" }
+  soulsoft_web_authentication_jwtbearer = { path = "${SPIRE_PATH}soulsoft_web_authentication_jwtbearer"}
 
 [target]
   # 本机目标：Ubuntu 22.04 x86_64（cjc -v 可查实际 Target）
   [target.x86_64-unknown-linux-gnu]
     compile-option = "-Woff unused -Woff deprecated -lcangjie-dynamicLoader-opensslFFI"
-    [target.x86_64-unknown-linux-gnu.bin-dependencies]
-      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  [target.x86_64-unknown-linux-gnu.bin-dependencies]
+    path-option = [ "${CANGJIE_STDX_PATH}" ]
