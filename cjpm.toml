@@ -20,6 +20,14 @@
   soulsoft_extensions_injection = { path = "${SPIRE_PATH}soulsoft_extensions_injection" }
   soulsoft_extensions_logging   = { path = "${SPIRE_PATH}soulsoft_extensions_logging" }
   soulsoft_web_authentication_jwtbearer = { path = "${SPIRE_PATH}soulsoft_web_authentication_jwtbearer"}
+  # JWT 签发/校验要直接 import 的包，仓颉不允许 import 未声明的传递依赖，必须逐个显式列出
+  soulsoft_web_authentication   = { path = "${SPIRE_PATH}soulsoft_web_authentication" }
+  soulsoft_identity_tokens      = { path = "${SPIRE_PATH}soulsoft_identity_tokens" }
+  soulsoft_identity_tokens_jwt  = { path = "${SPIRE_PATH}soulsoft_identity_tokens_jwt" }
+  soulsoft_identity_claims      = { path = "${SPIRE_PATH}soulsoft_identity_claims" }
+  # MySQL/MariaDB 驱动（纯仓颉实现，适配 cjc 1.1.3）
+  # TODO 部署：deploy.sh 尚未拉取该仓库，上服务器前要补上
+  mysql_driver = { path = "/home/ubuntu/Developer/mysql-driver-new" }
 
 [target]
   # 本机目标：Ubuntu 22.04 x86_64（cjc -v 可查实际 Target）

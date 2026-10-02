@@ -2,6 +2,7 @@ package changxi_backend
 
 import std.time.*
 import stdx.encoding.json.*
+import stdx.encoding.hex.*
 import std.crypto.digest.*
 import stdx.crypto.digest.*
 import soulsoft_web_http.*
@@ -26,23 +27,28 @@ public func handleSendCode(ctx: HttpContext): Unit {
     let expireTime = DateTime.nowUTC().toUnixTimeStamp().toSeconds() * 1000 + 5 * 60 * 1000
     
     // 查找用户是否已存在
-    let idx = findUserByNumber(number)
-    
-    if (idx >= 0) {
-        // 用户存在，更新验证码
-        updateVerifyCode(number, code, expireTime)
-    } else {
-        // 用户不存在，如果是注册用途，先创建一条记录
-        if (purpose == "register") {
-            createUser(number, "")
+    match (findUserByNumber(number)) {
+        case Some(_) =>
+            // 用户存在，更新验证码
             updateVerifyCode(number, code, expireTime)
-        } else {
-            writeError(ctx.response, 400, 2, "手机号未注册")
-            return
-        }
+        case None =>
+            // 用户不存在，如果是注册用途，先建一条记录
+            if (purpose == "register") {
+                createUser(number, "")
+                updateVerifyCode(number, code, expireTime)
+            } else {
+                writeError(ctx.response, 400, 2, "手机号未注册")
+                return
+            }
     }
     
-    writeOk(ctx.response, JsonNull())
+    // 开发模式把验证码放进响应 data，方便鸿蒙 APP 联调；
+    // CHANGXI_DEV_MODE 默认关，生产环境不设即符合接口文档（验证码只走短信）
+    if (devMode()) {
+        writeOk(ctx.response, JsonString(code))
+    } else {
+        writeOk(ctx.response, JsonNull())
+    }
 }
 
 // 注册接口
@@ -59,38 +65,30 @@ public func handleRegister(ctx: HttpContext): Unit {
     }
     
     // 查找用户
-    let idx = findUserByNumber(number)
-    if (idx < 0) {
-        writeError(ctx.response, 400, 2, "请先获取验证码")
-        return
+    match (findUserByNumber(number)) {
+        case None =>
+            writeError(ctx.response, 400, 2, "请先获取验证码")
+            return
+        case Some(user) =>
+            // 校验验证码
+            if (user.verifyCode.isEmpty() || user.verifyCode != code) {
+                writeError(ctx.response, 400, 3, "验证码错误")
+                return
+            }
+
+            // 校验是否过期
+            if (DateTime.nowUTC().toUnixTimeStamp().toSeconds() * 1000 > user.codeExpire) {
+                writeError(ctx.response, 400, 4, "验证码已过期")
+                return
+            }
+
+            // 密码加密（简单哈希），写库并清掉验证码
+            setPasswordAndClearCode(number, hashPassword(password))
+
+            // 签发 token
+            let token = issueToken(user.id)
+            writeOk(ctx.response, JsonString(token))
     }
-    
-    // 校验验证码
-    let dbCode = userVerifyCodes[idx]
-    let expireTime = userCodeExpires[idx]
-    
-    if (dbCode.isEmpty() || dbCode != code) {
-        writeError(ctx.response, 400, 3, "验证码错误")
-        return
-    }
-    
-    // 校验是否过期
-    if (DateTime.nowUTC().toUnixTimeStamp().toSeconds() * 1000 > expireTime) {
-        writeError(ctx.response, 400, 4, "验证码已过期")
-        return
-    }
-    
-    // 密码加密（简单哈希）
-    let hashedPwd = hashPassword(password)
-    
-    // 更新密码，清除验证码
-    updatePassword(idx, hashedPwd)
-    clearVerifyCode(idx)
-    
-    // 签发 token
-    let userId = userIds[idx]
-    let token = issueToken(userId.toString())
-    writeOk(ctx.response, JsonString(token))
 }
 
 // 登录接口
@@ -105,25 +103,22 @@ public func handleLogin(ctx: HttpContext): Unit {
     }
     
     // 查找用户
-    let idx = findUserByNumber(number)
-    if (idx < 0) {
-        writeError(ctx.response, 400, 2, "手机号未注册")
-        return
+    match (findUserByNumber(number)) {
+        case None =>
+            writeError(ctx.response, 400, 2, "手机号未注册")
+            return
+        case Some(user) =>
+            // 校验密码
+            let hashedPwd = hashPassword(password)
+            if (user.password.isEmpty() || user.password != hashedPwd) {
+                writeError(ctx.response, 400, 3, "密码错误")
+                return
+            }
+
+            // 签发 token
+            let token = issueToken(user.id)
+            writeOk(ctx.response, JsonString(token))
     }
-    
-    let dbPwd = userPasswords[idx]
-    
-    // 校验密码
-    let hashedPwd = hashPassword(password)
-    if (dbPwd.isEmpty() || dbPwd != hashedPwd) {
-        writeError(ctx.response, 400, 3, "密码错误")
-        return
-    }
-    
-    // 签发 token
-    let userId = userIds[idx]
-    let token = issueToken(userId.toString())
-    writeOk(ctx.response, JsonString(token))
 }
 
 // 登出接口
@@ -148,37 +143,11 @@ func generateCode(): String {
     return code.toString()
 }
 
-// 简单密码哈希
+// 简单密码哈希：SHA256 后转 64 字符十六进制
+// 不能用 "hexChars[i].toString()" 自己拼 —— String 下标取到的是 Byte(ASCII码)，
+// 转出来是 "102" 而不是 "f"，长度会膨胀到 150+，塞不进 VARCHAR(64)
 func hashPassword(password: String): String {
     let sha256Instance = SHA256()
     let md = digest(sha256Instance, password)
-    return bytesToHex(md)
-}
-
-// 字节数组转十六进制字符串
-func bytesToHex(bytes: Array<Byte>): String {
-    let hexChars = "0123456789abcdef"
-    var result = ""
-    var i = 0
-    while (i < bytes.size) {
-        let b = bytes[i]
-        let bInt = Int64(b)
-        let high = (bInt >> 4) & 0xF
-        let low = bInt & 0xF
-        result += hexChars[high].toString()
-        result += hexChars[low].toString()
-        i++
-    }
-    return result
-}
-
-// 签发 JWT token（简化版）
-func issueToken(userId: String): String {
-    let jwtSecret = mustGetEnv("PHARMACY_JWT_SECRET")
-    // 简单实现：userId + 过期时间 + 签名
-    let expireTime = DateTime.nowUTC().toUnixTimeStamp().toSeconds() * 1000 + 7 * 24 * 60 * 60 * 1000 // 7天
-    let payload = "${userId}|${expireTime}"
-    let sha256Instance = SHA256()
-    let signature = bytesToHex(digest(sha256Instance, "${payload}|${jwtSecret}"))
-    return "${payload}|${signature}"
+    return toHexString(md)
 }

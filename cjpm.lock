@@ -1,3 +1,4 @@
 version = 0
 
 [requires]
+  soulsoft_formats_asn1 = {git = "https://gitcode.com/soulsoft/soulsoft_formats_asn1.git", commitId = "28486e809fd42fa99f140caeb93ce674c98d6a24", branch = "main"}

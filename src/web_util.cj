@@ -49,8 +49,10 @@ public func writeOk(response: HttpResponse, data: JsonValue): Unit {
     writeJson(response, 200, 0, "ok", data)
 }
 
+// 失败时 data 必须是 null —— 接口文档明确要求"失败统一返回 null"，
+// 返回空对象 {} 会让 APP 按 spec 判空的逻辑失效
 public func writeError(response: HttpResponse, status: UInt16, code: Int64, message: String): Unit {
-    writeJson(response, status, code, message, JsonObject())
+    writeJson(response, status, code, message, JsonNull())
 }
 
 // 从查询串取一个整数：取不到、解析失败、越界，一律夹回合法区间
