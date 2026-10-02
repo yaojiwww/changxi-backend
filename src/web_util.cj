@@ -46,7 +46,7 @@ public func writeJson(response: HttpResponse, status: UInt16, code: Int64,
 }
 
 public func writeOk(response: HttpResponse, data: JsonValue): Unit {
-    writeJson(response, 200, 0, "ok", data)
+    writeJson(response, 200, CODE_OK, "ok", data)
 }
 
 // 失败时 data 必须是 null —— 接口文档明确要求"失败统一返回 null"，

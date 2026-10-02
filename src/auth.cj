@@ -15,7 +15,7 @@ public func handleSendCode(ctx: HttpContext): Unit {
     
     // 参数校验
     if (number.isEmpty() || purpose.isEmpty()) {
-        writeError(ctx.response, 400, 1, "手机号和用途不能为空")
+        writeError(ctx.response, 400, CODE_PARAM_INVALID, "手机号和用途不能为空")
         return
     }
     
@@ -37,7 +37,7 @@ public func handleSendCode(ctx: HttpContext): Unit {
                 createUser(number, "")
                 updateVerifyCode(number, code, expireTime)
             } else {
-                writeError(ctx.response, 400, 2, "手机号未注册")
+                writeError(ctx.response, 400, CODE_NUMBER_NOT_REGISTERED, "手机号未注册")
                 return
             }
     }
@@ -98,20 +98,20 @@ public func handleLogin(ctx: HttpContext): Unit {
     let password = jsonField(body, "password")
     
     if (number.isEmpty() || password.isEmpty()) {
-        writeError(ctx.response, 400, 1, "手机号和密码不能为空")
+        writeError(ctx.response, 400, CODE_PARAM_INVALID, "手机号和密码不能为空")
         return
     }
     
     // 查找用户
     match (findUserByNumber(number)) {
         case None =>
-            writeError(ctx.response, 400, 2, "手机号未注册")
+            writeError(ctx.response, 400, CODE_NUMBER_NOT_REGISTERED, "手机号未注册")
             return
         case Some(user) =>
             // 校验密码
             let hashedPwd = hashPassword(password)
             if (user.password.isEmpty() || user.password != hashedPwd) {
-                writeError(ctx.response, 400, 3, "密码错误")
+                writeError(ctx.response, 400, CODE_PASSWORD_WRONG, "密码错误")
                 return
             }
 
