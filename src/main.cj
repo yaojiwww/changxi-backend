@@ -31,15 +31,17 @@ main(args: Array<String>): Int64 {
         ctx.response.write("changxi 后端已就绪")
     }
 
-    // 业务路由按接口文档逐域接入：认证域 → 业务域
+    // 业务路由按接口文档逐域接入：认证域 → 刷题域
     // 认证域
     app.mapPost("/api/v1/auth/send-code") { ctx => handleSendCode(ctx) }
     app.mapPost("/api/v1/auth/register") { ctx => handleRegister(ctx) }
     app.mapPost("/api/v1/auth/login") { ctx => handleLogin(ctx) }
     app.mapPost("/api/v1/auth/logout") { ctx => handleLogout(ctx) }
-    
-    // 业务域
-    app.mapPost("/api/v1/chat") { ctx => handleChat(ctx) }
+
+    // 刷题域（均需登录，见 src/quiz.cj 的 requireUser）
+    app.mapGet("/api/v1/chapters") { ctx => handleChapters(ctx) }
+    app.mapGet("/api/v1/chapters/{id}/questions") { ctx => handleChapterQuestions(ctx) }
+    app.mapPost("/api/v1/questions/{id}/answer") { ctx => handleAnswer(ctx) }
 
     // 绑定 0.0.0.0：监听所有网卡，局域网/外网设备才能访问（默认的 127.0.0.1 只对本机开放）
     app.run("http://0.0.0.0:8080")

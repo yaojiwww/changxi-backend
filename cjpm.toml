@@ -20,7 +20,6 @@
   soulsoft_extensions_injection = { path = "${SPIRE_PATH}soulsoft_extensions_injection" }
   soulsoft_extensions_logging   = { path = "${SPIRE_PATH}soulsoft_extensions_logging" }
   soulsoft_web_authentication_jwtbearer = { path = "${SPIRE_PATH}soulsoft_web_authentication_jwtbearer"}
-  # JWT 签发/校验要直接 import 的包，仓颉不允许 import 未声明的传递依赖，必须逐个显式列出
   soulsoft_web_authentication   = { path = "${SPIRE_PATH}soulsoft_web_authentication" }
   soulsoft_identity_tokens      = { path = "${SPIRE_PATH}soulsoft_identity_tokens" }
   soulsoft_identity_tokens_jwt  = { path = "${SPIRE_PATH}soulsoft_identity_tokens_jwt" }

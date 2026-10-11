@@ -1,4 +1,9 @@
-部署开发环境
+# cangjie 命令
+1. 构建
+```cjpm
+cjpm build
 ```
-./deploy.sh
+2. 运行
+```cjpm
+cjpm run
 ```

@@ -10,6 +10,7 @@ package changxi_backend
 //   0       成功
 //   1xxx    客户端错误 / 认证域
 //   2xxx    鉴权（任何需要登录的接口共用，不限认证域）
+//   3xxx    刷题域
 //   5xxx    服务端错误
 
 // 成功。writeOk 内部也用它，保持单一来源
@@ -39,3 +40,14 @@ public const CODE_VERIFY_CODE_TOO_FREQUENT: Int64 = 1006
 
 // token 无效或已过期：客户端收到它就清本地 token 并跳登录页
 public const CODE_TOKEN_INVALID: Int64 = 2001
+
+// ---------- 3xxx 刷题域 ----------
+
+// 章节不存在：路径里的 {id} 查不到对应章节
+public const CODE_CHAPTER_NOT_FOUND: Int64 = 3001
+
+// 题目不存在：提交答案时 questionId 查不到
+public const CODE_QUESTION_NOT_FOUND: Int64 = 3002
+
+// 答案里出现了该题没有的选项标号，如题目只有 A~D 却提交了 "ABE"
+public const CODE_ANSWER_INVALID: Int64 = 3003
