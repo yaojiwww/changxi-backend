@@ -1,0 +1,13 @@
+# 构建上下文里不要的东西。
+# 注意：spire/、mysql_driver/、docker/ 是构建必需的，千万别加到这里来。
+.git
+**/.git
+target
+output
+.vscode
+.qoder
+docs
+sql
+*.md
+docker-build.sh
+.DS_Store
