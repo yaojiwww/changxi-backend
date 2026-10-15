@@ -7,3 +7,14 @@ cjpm build
 ```cjpm
 cjpm run
 ```
+# 编译 + 启动服务（前台）
+docker compose up
+
+# 只编译
+docker compose run --rm dev cjpm build
+
+# 进容器随便玩
+docker compose run --rm dev bash
+
+# 停掉
+docker compose down
