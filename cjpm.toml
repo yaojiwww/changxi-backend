@@ -2,7 +2,7 @@
   cjc-version = "1.1.3"
   name = "changxi_backend"
   organization = ""
-  description = "保育员考试刷题 —— 命令行交互版"
+  description = "保育员考试刷题 —— 后端服务"
   version = "1.0.0"
   target-dir = ""
   script-dir = ""
@@ -12,17 +12,19 @@
   link-option = ""
   package-configuration = {}
 
-# 命令行版：不依赖 Spire / 数据库。
-# 用户数据用文件持久化，题库内嵌在代码里，原生编译、秒级启动。
-
 [dependencies]
+  soulsoft_web_hosting          = { path = "${SPIRE_PATH}soulsoft_web_hosting" }
+  soulsoft_web_routing          = { path = "${SPIRE_PATH}soulsoft_web_routing" }
+  soulsoft_web_http             = { path = "${SPIRE_PATH}soulsoft_web_http" }
+  soulsoft_extensions_injection = { path = "${SPIRE_PATH}soulsoft_extensions_injection" }
 
 [target]
-  [target.aarch64-apple-darwin]
-    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated --sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk"
-    [target.aarch64-apple-darwin.bin-dependencies]
-      path-option = [ "/Users/yaojiwww/.cangjie/stdx/cangjie-stdx-mac-aarch64-1.1.3.1/dynamic/stdx" ]
-  [target.aarch64-unknown-linux-gnu]
+ [target.aarch64-unknown-linux-gnu]
     compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
     [target.aarch64-unknown-linux-gnu.bin-dependencies]
       path-option = [ "${CANGJIE_STDX_PATH}" ]
+ [target.x86_64-unknown-linux-gnu]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
+    [target.x86_64-unknown-linux-gnu.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  

@@ -47,7 +47,6 @@ changxi-backend/                # 后端：仓颉 + Spire
 ## 当前进度
 2026.10.12
 - 跑通 Spire框架的最小 Host 系统
-2026.10.13
 2026.10.14
 - 命令行版 AI 助手：接入 Dify 智能体（streaming/SSE 流式对话，多轮记忆 conversation_id）
 - 密钥读环境变量 DIFY_API_KEY；接口地址默认 Dify 云端，可用 DIFY_API_BASE 覆盖
@@ -55,3 +54,9 @@ changxi-backend/                # 后端：仓颉 + Spire
 - macOS 本机运行用 `cjpm run`（stdx/runtime 的动态库路径 cjpm 自己会补，openssl 那条在 ~/.zshrc 里）
 - 真机联调通过：TLS 客户端必须显式设 `tls.serverName`（仓颉默认不发 SNI，会被网关拒握手）；已实测多轮记忆生效
 - DIFY_API_KEY 已在 ~/.zshrc 里全局导出，本机不需要每次手动 export
+2026.10.15
+- main.cj 清空重写，只留最小 Spire Host（造 builder → 注册服务 → build → 登记路由 → app.run）
+- 实测通过：`docker compose up -d dev` 后 `curl http://localhost:8080/hello` 返回 200「changxi 后端已就绪」
+- 踩坑①`app.useRouting()` 不能手写：WebHost 启动时自己会挂（dataSources 非空时自动 useRouting+useEndpoints）
+- 踩坑②docker-compose 是「宿主机 8080 → 容器 5000」，app.run 必须绑容器内的 5000
+- 代价：整包现在依赖 Spire，**本机 macOS 编译不了**（缺 std.reflect），`cjpm run` 的终端版已挪到 cli-version 分支存档
