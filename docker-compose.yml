@@ -2,69 +2,48 @@ services:
   db:
     image: mariadb:11.4
     platform: linux/arm64
-    restart: unless-stopped
     environment:
-      # 开发环境口令，明文写在这里没关系（只在本地用）。
-      # 上生产必须换成环境变量注入，绝不入库。
       MARIADB_ROOT_PASSWORD: changxi_root
       MARIADB_DATABASE: changxi
-      MARIADB_USER: changxi
-      MARIADB_PASSWORD: changxi_pwd
+      MARIADB_USER: yaojiw
+      MARIADB_PASSWORD: 123456
     ports:
-      # 宿主机也能连（Navicat / TablePlus / mysql 命令行）
       - "3306:3306"
     volumes:
-      # 数据持久化：容器删了数据还在
       - db-data:/var/lib/mysql
-      # 首次启动时自动执行 sql/ 下的建表脚本（按文件名字典序）
-      # 注意：只在数据卷为空时执行一次。改了 sql 想重跑要 down -v 清卷
       - ./sql:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
       timeout: 3s
       retries: 20
-
-  dev:
-    build:
-      context: ./docker
-    image: changxi-backend-dev
+  dev:          
+    build: ./docker
+    image: cangjie:1.1.3
     platform: linux/arm64
+    environment:
+      - SPIRE_PATH=/opt/spire/
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=yaojiw
+      - DB_PASS=123456
+      - DB_NAME=changxi
+      - CHANGXI_DEV_MODE=1
     working_dir: /app
     depends_on:
       db:
         condition: service_healthy
     ports:
-      # 宿主机 8080 -> 容器 5000。不用 5000 是因为 macOS 的
-      # AirPlay 接收器会占用宿主机的 5000 端口。
-      # 访问：http://localhost:8080
       - "8080:5000"
     volumes:
-      # 源码（实时挂载，改完立刻生效）
       - ./src:/app/src
       - ./cjpm.toml:/app/cjpm.toml
       - ./cjpm.lock:/app/cjpm.lock
-      # 天擎框架源码，对应 cjpm.toml 里的 ${SPIRE_PATH}
-      - ${SPIRE_PATH}:/opt/spire:ro
-      # MariaDB 驱动源码，对应 cjpm.toml 里的 ./mariadb_driver
       - ./mariadb_driver:/app/mariadb_driver
-      # 编译产物落在宿主机，方便查看
+      - ${SPIRE_PATH}:/opt/spire:ro
       - ./target:/app/target
-    environment:
-      - SPIRE_PATH=/opt/spire/
-      # 数据库连接参数（src/config.cj 从这里读，代码里不硬编码账号密码）
-      # 主机名用服务名 db —— 容器之间靠 compose 网络的服务名互相寻址
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=changxi
-      - DB_PASS=changxi_pwd
-      - DB_NAME=changxi
-      # 联调开关：打开后发验证码接口会把验证码直接放在响应里返回
-      # 生产环境不要设，验证码只走短信
-      - CHANGXI_DEV_MODE=1
-    # 默认：编译后启动服务。只想编译就：
-    #   docker compose run --rm dev cjpm build
     command: bash -c "cjpm build && exec ./target/release/bin/main"
 
 volumes:
   db-data:
+

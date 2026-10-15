@@ -18,3 +18,8 @@ docker compose run --rm dev bash
 
 # 停掉
 docker compose down
+
+# 检查docker-compose.yml里语法
+```
+docker compose config
+```
