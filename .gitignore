@@ -3,7 +3,9 @@ target/
 build/
 output/
 
-
+# SDK 压缩包：体积大（812MB），且可从官方重新下载
+# 注意只挡 sdk/ —— Dockerfile 是源码，必须入库
+docker/sdk/
 # 复制进来的天擎框架依赖（通过 SPIRE_PATH 引用，不入库）
 spire/
 # 复制进来的数据库驱动（通过本地路径依赖引用，不入库）
