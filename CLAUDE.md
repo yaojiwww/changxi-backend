@@ -1,13 +1,17 @@
+<!-- 一个可以复用的 Claude.md 准则，指导 Claude Code 工作。 -->
 # CLAUDE.md
 
 本文件为 Claude Code (claude.ai/code) 在此代码库中工作时提供指导。
+
+<!-- 这个在 Work 模式下不需要，Learn 模式添加辅助学习。 -->
+## CLAUDE 任务
+
 claude助手全程指导我边学边做，不得一下把全部代码写出来，每次只说一点，一点一点来。
 
 ## 项目概述
 
 保育员考试刷题app，内置AI解析和AI助手。
-客户端：采用 HarmonyOS NEXT (API 24) 开发，采用 MVVM 架构模式和 V2 状态管理。
-服务端：后端使用仓颉（Cangjie）+ Spire 框架，数据库使用 mariadb。
+后端使用仓颉（Cangjie）+ Spire 框架，数据库使用 mariadb。
 
 ## 项目结构
 
@@ -41,3 +45,18 @@ changxi-backend/                # 后端：仓颉 + Spire
 先用docker进行环境部署，开发时用arm的cangjie包，编译快，适合经常编译。发布时再将源码用x86_64cangjie包重新打包编译，在服务器运行。
 
 ## 当前进度
+2026.10.12
+- 跑通 Spire框架的最小 Host 系统
+2026.10.14
+- 命令行版 AI 助手：接入 Dify 智能体（streaming/SSE 流式对话，多轮记忆 conversation_id）
+- 密钥读环境变量 DIFY_API_KEY；接口地址默认 Dify 云端，可用 DIFY_API_BASE 覆盖
+- 菜单循环接入 EOF 处理，管道输入结束不再死循环刷屏
+- macOS 本机运行用 `cjpm run`（stdx/runtime 的动态库路径 cjpm 自己会补，openssl 那条在 ~/.zshrc 里）
+- 真机联调通过：TLS 客户端必须显式设 `tls.serverName`（仓颉默认不发 SNI，会被网关拒握手）；已实测多轮记忆生效
+- DIFY_API_KEY 已在 ~/.zshrc 里全局导出，本机不需要每次手动 export
+2026.10.15
+- main.cj 清空重写，只留最小 Spire Host（造 builder → 注册服务 → build → 登记路由 → app.run）
+- 实测通过：`docker compose up -d dev` 后 `curl http://localhost:8080/hello` 返回 200「changxi 后端已就绪」
+- 踩坑①`app.useRouting()` 不能手写：WebHost 启动时自己会挂（dataSources 非空时自动 useRouting+useEndpoints）
+- 踩坑②docker-compose 是「宿主机 8080 → 容器 5000」，app.run 必须绑容器内的 5000
+- 代价：整包现在依赖 Spire，**本机 macOS 编译不了**（缺 std.reflect），`cjpm run` 的终端版已挪到 cli-version 分支存档

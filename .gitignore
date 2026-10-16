@@ -3,8 +3,9 @@ target/
 build/
 output/
 
-# Docker 构建资源（体积大，且可从官方重新下载，绝不入库）
-docker/
+# SDK 压缩包：体积大（812MB），且可从官方重新下载
+# 注意只挡 sdk/ —— Dockerfile 是源码，必须入库
+docker/sdk/
 # 复制进来的天擎框架依赖（通过 SPIRE_PATH 引用，不入库）
 spire/
 # 复制进来的数据库驱动（通过本地路径依赖引用，不入库）
@@ -18,6 +19,8 @@ config/secret*
 # 系统垃圾文件
 .DS_Store
 
+# 运行时用户数据（命令行版的文件持久化）
+users.txt
+
 # 开发环境配置文件
 .vscode/
-。qoder/
