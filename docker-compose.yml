@@ -34,6 +34,12 @@ services:
       - cangjie_Database__User=yaojiw
       - cangjie_Database__Password=123456
       - cangjie_Database__Name=changxi
+      # AI 伴学：Dify 的密钥只在宿主机环境变量里（~/.zshrc），不进代码也不进
+      # appsettings.json（那个文件是要提交的），所以必须在这里显式透传进容器。
+      # 末尾的 ${VAR:-} 是"没设就当空串"，不加的话没设时会打印一堆警告。
+      - DIFY_API_KEY=${DIFY_API_KEY:-}
+      # 自建版 Dify 才需要；不设或为空时后端用云端 https://api.dify.ai/v1
+      - DIFY_API_BASE=${DIFY_API_BASE:-}
     working_dir: /app
     depends_on:
       db:
