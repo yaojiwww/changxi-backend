@@ -59,4 +59,19 @@ changxi-backend/                # 后端：仓颉 + Spire
 - 实测通过：`docker compose up -d dev` 后 `curl http://localhost:8080/hello` 返回 200「changxi 后端已就绪」
 - 踩坑①`app.useRouting()` 不能手写：WebHost 启动时自己会挂（dataSources 非空时自动 useRouting+useEndpoints）
 - 踩坑②docker-compose 是「宿主机 8080 → 容器 5000」，app.run 必须绑容器内的 5000
-- 代价：整包现在依赖 Spire，**本机 macOS 编译不了**（缺 std.reflect），`cjpm run` 的终端版已挪到 cli-version 分支存档
+2026.10.16
+- 重写 docker-compose.yml && dockerfile
+- 修改数据库配置，库里目前没有表
+- docker 跑通最小 Host
+- 认证模块完成（5 个接口），全部实测通过：
+  - 响应信封：`src/api_response.cj`，中间件兜住所有 404/异常，任何路径都是 `{code,message,data}`
+  - 数据访问：`src/database.cj` + `src/repositories.cj`（SQL 全在这一个文件里）
+  - 密码哈希：`src/password.cj`（sha256 + 每用户随机盐 + 12000 轮，约 7ms/次）
+  - JWT：`src/jwt.cj`（自己实现 HS256，未用 Spire 的 JwtSecurityTokenHandler）
+  - 接口：`src/auth_controller.cj`（send-code / register / login / logout / account-delete）
+  - 配置：`appsettings.json` + 环境变量 `cangjie_Database__*`；密钥不硬编码
+- 实测：注册→登录→登出→旧令牌失效→注销→换手机号重新注册，全链路通过
+- 踩坑①`phone` 列宽必须是 64 而不是 11：注销要把手机号改写成 `del_{id}_{原号}` 释放唯一键，11 位放不下会报 `Data too long`，注销接口直接 500
+- 踩坑②`src/` 下原有的命令行版文件（ai/quiz/storage/auth.cj）里有 `User` 类和 `hashPassword`，与新的 HTTP 代码撞名，已移到仓库根目录 `cli/`（git mv 保留历史，不影响编译）
+- 踩坑③容器里 `println` 是块缓冲的，要实时看的日志必须用 `src/logging.cj` 的 `serverLog()`（带 flush）——验证码打印就是靠它
+- 待办：上线前删掉 `/api/v1/dev/boom` 这个故意抛异常的测试接口

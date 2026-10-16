@@ -17,8 +17,22 @@
   soulsoft_web_routing          = { path = "${SPIRE_PATH}soulsoft_web_routing" }
   soulsoft_web_http             = { path = "${SPIRE_PATH}soulsoft_web_http" }
   soulsoft_extensions_injection = { path = "${SPIRE_PATH}soulsoft_extensions_injection" }
+  # 配置系统：appsettings.json + 环境变量覆盖（WebHost 内部已用，这里显式声明方便直接 import）
+  soulsoft_extensions_configuration = { path = "${SPIRE_PATH}soulsoft_extensions_configuration" }
+  # MariaDB 驱动：实现仓颉标准的 std.database.sql 接口（JDBC 风格），是驱动不是 ORM
+  mariadb                       = { path = "./mariadb_driver" }
 
 [target]
+ # macOS 本机开发用（Apple Silicon）。少了这一段，cjc 在 macOS 上找不到 stdx 的 .cjo，
+ # 只要源码里出现 import stdx.* 就直接报「not added as a dependency」。
+ [target.aarch64-apple-darwin]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated"
+    [target.aarch64-apple-darwin.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+ [target.x86_64-apple-darwin]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated"
+    [target.x86_64-apple-darwin.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
  [target.aarch64-unknown-linux-gnu]
     compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
     [target.aarch64-unknown-linux-gnu.bin-dependencies]
