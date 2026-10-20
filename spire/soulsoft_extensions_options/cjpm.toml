@@ -1,9 +1,0 @@
-[package]
-  cjc-version = "1.1.0"
-  description = "强类型选项库，支持命名选项、后置配置、验证与依赖注入集成。"
-  name = "soulsoft_extensions_options"
-  output-type = "static"
-  version = "1.0.0"
-
-[dependencies]
-  soulsoft_extensions_injection = { path = "../soulsoft_extensions_injection"}  

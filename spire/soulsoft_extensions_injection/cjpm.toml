@@ -1,6 +1,0 @@
-[package]
-  cjc-version = "1.1.0"
-  name = "soulsoft_extensions_injection"
-  description = "依赖注入库，支持服务注册、服务解析和控制反转。"
-  output-type = "static"
-  version = "1.0.0"
