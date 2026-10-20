@@ -1,0 +1,35 @@
+[package]
+  cjc-version = "1.1.0"
+  name = "soulsoft_identity_server"
+  description = "身份认证服务器，支持 OAuth 2.0 和 OpenID Connect (OIDC) 协议，提供身份认证、授权和令牌管理能力。"
+  output-type = "static"
+  version = "1.0.0"
+
+[dependencies]
+  soulsoft_web_http = { path = "../soulsoft_web_http"}
+  soulsoft_web_cors = { path = "../soulsoft_web_cors"}
+  soulsoft_identity_claims = { path = "../soulsoft_identity_claims"}
+  soulsoft_identity_tokens = { path = "../soulsoft_identity_tokens"}
+  soulsoft_web_hosting = { path = "../soulsoft_web_hosting"}
+  soulsoft_web_authentication = { path = "../soulsoft_web_authentication"}
+  soulsoft_extensions_options = { path = "../soulsoft_extensions_options"}
+  soulsoft_extensions_logging = { path = "../soulsoft_extensions_logging"}
+  soulsoft_extensions_caching = { path = "../soulsoft_extensions_caching"}
+  soulsoft_identity_tokens_jwt = { path = "../soulsoft_identity_tokens_jwt"}
+  soulsoft_extensions_injection = { path = "../soulsoft_extensions_injection"}
+  soulsoft_identity_protocols_oidc = { path = "../soulsoft_identity_protocols_oidc"}
+  soulsoft_extensions_configuration = { path = "../soulsoft_extensions_configuration"}
+
+[target]
+  [target.x86_64-w64-mingw32]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -lcrypt32"
+    [target.x86_64-w64-mingw32.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  [target.x86_64-unknown-linux-gnu]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
+    [target.x86_64-unknown-linux-gnu.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  [target.aarch64-unknown-linux-gnu]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
+    [target.aarch64-unknown-linux-gnu.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>登录回调处理中...</title>
+  </head>
+  <body>
+    <h2>正在处理登录回调，请稍候...</h2>
+    <div id="msg"></div>
+
+    <script type="module">
+      import { userManager } from "./auth.js";
+
+      // 核心逻辑：处理 URL 中的 code
+      userManager
+        .signinCallback()
+        .then((user) => {
+          console.log("登录成功，User:", user);
+          document.getElementById("msg").innerText = "登录成功，正在跳转...";
+
+          // 登录成功后，跳转回主页
+          // 这里使用 replace 避免用户点“后退”按钮时又回到回调页报错
+          window.location.replace("./index.html");
+        })
+        .catch((err) => {
+          console.error("回调报错:", err);
+          document.getElementById("msg").innerText = "登录失败: " + err.message;
+
+          // 失败了可以在这里加个按钮让用户回首页
+          const link = document.createElement("a");
+          link.href = "./index.html";
+          link.innerText = " 返回首页";
+          document.body.appendChild(link);
+        });
+    </script>
+  </body>
+</html>

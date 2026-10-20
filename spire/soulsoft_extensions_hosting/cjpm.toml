@@ -1,0 +1,14 @@
+[package]
+  cjc-version = "1.1.0"
+  description = "通用主机扩展库，支持后台服务、控制台应用和 Web 应用的统一启动与生命周期管理。"
+  name = "soulsoft_extensions_hosting"
+  output-type = "static"
+  version = "1.0.0"
+  
+[dependencies]
+  soulsoft_extensions_logging = { path = "../soulsoft_extensions_logging"}
+  soulsoft_extensions_options = { path = "../soulsoft_extensions_options"}
+  soulsoft_extensions_injection = { path = "../soulsoft_extensions_injection"}
+  soulsoft_extensions_configuration = { path = "../soulsoft_extensions_configuration"}
+  soulsoft_extensions_logging_console = { path = "../soulsoft_extensions_logging_console"}
+  soulsoft_extensions_logging_configuration = { path = "../soulsoft_extensions_logging_configuration"}  

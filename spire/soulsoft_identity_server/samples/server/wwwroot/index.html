@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soulsoft IdentityServer - 企业级身份认证服务</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #008B8B;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: 14px;
+            font-weight: 400;
+            color: #666;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #008B8B;
+        }
+
+        .nav-links .btn-login {
+            background: #008B8B;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .nav-links .btn-login:hover {
+            background: #006B75;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 100px 40px 80px;
+            background: linear-gradient(180deg, #f8fafa 0%, #ffffff 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 52px;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero-content .highlight {
+            color: #008B8B;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #008B8B;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #006B75;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 139, 139, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #008B8B;
+            border: 2px solid #008B8B;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafa;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 40px;
+            background: white;
+        }
+
+        .features-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: #e6f5f5;
+            color: #008B8B;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: #008B8B;
+            box-shadow: 0 8px 24px rgba(0, 139, 139, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #008B8B 0%, #00A3A3 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Protocols Section */
+        .protocols {
+            padding: 80px 40px;
+            background: #f8fafa;
+        }
+
+        .protocols-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .protocols-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .protocol-card {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .protocol-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .protocol-desc {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: #999;
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            color: white;
+        }
+
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #008B8B;
+            margin-bottom: 12px;
+        }
+
+        .footer-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #999;
+        }
+
+        .footer-section h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #008B8B;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 24px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .protocols-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">SOULSOFT</div>
+                <div class="logo-subtitle">IdentityServer</div>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">功能特性</a>
+                <a href="#protocols">协议支持</a>
+                <a href="/.well-known/openid-configuration">API 文档</a>
+                <a href="/account/login.html" class="btn-login">登录</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>企业级<span class="highlight">身份认证</span>解决方案</h1>
+            <p>基于 OAuth 2.0 和 OpenID Connect 标准，为您的应用提供安全、可靠、易集成的统一身份认证和授权管理服务。</p>
+            <div class="hero-actions">
+                <a href="/account/login.html" class="btn btn-primary">立即开始</a>
+                <a href="/.well-known/openid-configuration" class="btn btn-secondary">查看文档</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-content">
+            <div class="section-header">
+                <span class="section-tag">核心能力</span>
+                <h2 class="section-title">为什么选择 Soulsoft IdentityServer</h2>
+                <p class="section-subtitle">完整的身份认证和授权解决方案，助力企业构建安全可靠的微服务架构</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3 class="feature-title">统一身份认证</h3>
+                    <p class="feature-description">支持多种认证方式，包括密码、客户端凭证、授权码等，提供灵活的身份验证机制。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">企业级安全</h3>
+                    <p class="feature-description">基于行业标准协议，提供多层安全防护，确保令牌和用户数据的安全性。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">高性能架构</h3>
+                    <p class="feature-description">优化的令牌生成和验证流程，支持高并发场景，响应时间低于 50ms。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔑</div>
+                    <h3 class="feature-title">完整令牌管理</h3>
+                    <p class="feature-description">支持 Access Token、Refresh Token、ID Token，提供灵活的令牌生命周期管理。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <h3 class="feature-title">高度可扩展</h3>
+                    <p class="feature-description">可插拔的存储接口、自定义验证器、扩展授权类型，满足各种业务需求。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">审计与监控</h3>
+                    <p class="feature-description">完整的操作日志记录，实时监控服务状态，便于安全审计和问题追踪。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Protocols Section -->
+    <section class="protocols" id="protocols">
+        <div class="protocols-content">
+            <div class="section-header">
+                <span class="section-tag">标准协议</span>
+                <h2 class="section-title">完整的协议支持</h2>
+                <p class="section-subtitle">遵循国际标准，确保与各类应用的无缝集成</p>
+            </div>
+            <div class="protocols-grid">
+                <div class="protocol-card">
+                    <div class="protocol-name">OAuth 2.0</div>
+                    <div class="protocol-desc">RFC 6749/6750</div>
+                </div>
+                <div class="protocol-card">
+                    <div class="protocol-name">OpenID Connect</div>
+                    <div class="protocol-desc">Core 1.0</div>
+                </div>
+                <div class="protocol-card">
+                    <div class="protocol-name">JWT</div>
+                    <div class="protocol-desc">RFC 7519</div>
+                </div>
+                <div class="protocol-card">
+                    <div class="protocol-name">JWKS</div>
+                    <div class="protocol-desc">密钥发现</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">SOULSOFT IdentityServer</div>
+                    <p class="footer-desc">企业级身份认证和授权解决方案，基于 OAuth 2.0 和 OpenID Connect 标准，为微服务架构提供统一的身份管理能力。</p>
+                </div>
+                <div class="footer-section">
+                    <h4>产品</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">功能特性</a></li>
+                        <li><a href="#protocols">协议支持</a></li>
+                        <li><a href="/.well-known/openid-configuration">API 文档</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>开发者</h4>
+                    <ul class="footer-links">
+                        <li><a href="/connect/token">Token 端点</a></li>
+                        <li><a href="/connect/userinfo">UserInfo 端点</a></li>
+                        <li><a href="/.well-known/openid-configuration/jwks">JWKS 端点</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>关于</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">联系我们</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2026 Soulsoft IdentityServer. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

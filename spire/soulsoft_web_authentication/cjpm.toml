@@ -1,0 +1,27 @@
+[package]
+  cjc-version = "1.1.0"
+  name = "soulsoft_web_authentication"
+  description = "Web 身份认证库，支持认证处理器、认证方案和认证流程扩展。"
+  version = "1.0.0"
+  output-type = "static"
+
+[dependencies]
+  soulsoft_web_http = { path = "../soulsoft_web_http"}
+  soulsoft_identity_claims = { path = "../soulsoft_identity_claims"}
+  soulsoft_extensions_logging = { path = "../soulsoft_extensions_logging"}
+  soulsoft_extensions_options = { path = "../soulsoft_extensions_options"}
+  soulsoft_extensions_injection = { path = "../soulsoft_extensions_injection"}
+
+[target]
+  [target.x86_64-w64-mingw32]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -lcrypt32"
+    [target.x86_64-w64-mingw32.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  [target.x86_64-unknown-linux-gnu]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
+    [target.x86_64-unknown-linux-gnu.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  [target.aarch64-unknown-linux-gnu]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
+    [target.aarch64-unknown-linux-gnu.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]  

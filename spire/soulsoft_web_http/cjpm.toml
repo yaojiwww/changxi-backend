@@ -1,0 +1,26 @@
+[package]
+  cjc-version = "1.1.0"
+  description = "Web HTTP 抽象库，支持 HTTP 上下文、请求与响应、中间件管道等基础能力。"
+  name = "soulsoft_web_http"
+  output-type = "static"
+  version = "1.0.0"
+
+
+[dependencies]
+  soulsoft_serialization = { path = "../soulsoft_serialization"}  
+  soulsoft_identity_claims = { path = "../soulsoft_identity_claims"}
+  soulsoft_extensions_injection = { path = "../soulsoft_extensions_injection"}  
+
+[target]
+  [target.x86_64-w64-mingw32]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -lcrypt32"
+    [target.x86_64-w64-mingw32.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  [target.x86_64-unknown-linux-gnu]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
+    [target.x86_64-unknown-linux-gnu.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  [target.aarch64-unknown-linux-gnu]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
+    [target.aarch64-unknown-linux-gnu.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]

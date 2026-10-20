@@ -1,0 +1,175 @@
+# 开源代码参考声明
+
+## Open Source Code Reference Declaration
+
+本项目的部分源代码参考了以下开源项目。我们感谢这些项目的贡献者，并严格遵守相应的开源许可证要求。
+
+Some source code in this project references the following open source projects. We thank the contributors of these projects and strictly comply with the corresponding open source license requirements.
+
+---
+
+## .NET Foundation 项目参考
+
+### 1. ASP.NET Core
+- **源代码仓库**: https://github.com/dotnet/aspnetcore
+- **版权所有者**: .NET Foundation and contributors
+- **参考范围**: [路由中间件，健康检测中间件，身份认证中间件，授权中间件，跨域中间件，MVC，Http客户端扩展]
+- **参考内容**: [数据结构和部分算法]
+- **修改情况**: [由于只参考了核心部分，因此很多额外能力丧失]
+- **许可证**: MIT License
+
+### 2. .NET Runtime
+- **源代码仓库**: https://github.com/dotnet/runtime
+- **版权所有者**: .NET Foundation and contributors
+- **参考范围**: [依赖注入，日志，选项，配置，Http客户端]
+- **参考内容**: [依赖注入]
+- **修改情况**: [存在少量修改]
+- **许可证**: MIT License
+
+#### .NET Foundation MIT License 文本
+```
+Copyright (c) .NET Foundation and Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## Microsoft 项目参考
+
+### 3. OpenAPI .NET
+- **源代码仓库**: https://github.com/Microsoft/OpenAPI.NET
+- **版权所有者**: Microsoft Corporation
+- **参考范围**: [OpenAaiDocument数据结构]
+- **参考内容**: [数据结构]
+- **修改情况**: [大幅修改，因此很多额外能力丧失]
+- **许可证**: MIT License
+
+#### Microsoft MIT License 文本
+```
+Copyright (c) Microsoft Corporation
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## AzureAD 项目参考
+
+### 4. Microsoft IdentityModel Extensions for .NET
+- **源代码仓库**: https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet
+- **版权所有者**: Microsoft Corporation (AzureAD)
+- **参考范围**: [身份认证和身份令牌]
+- **参考内容**: [数据结构]
+- **修改情况**: [大幅修改，因此很多额外能力丧失]
+- **许可证**: MIT License
+
+#### AzureAD MIT License 文本
+```
+Copyright (c) Microsoft Corporation
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+### 参考方式说明 / Reference Method Description
+
+- 🔍 **代码参考**: 研究并学习了相关开源项目的实现思路和架构设计
+- 💡 **灵感借鉴**: 借鉴了优秀的设计模式和编程实践
+- ⚡ **优化改进**: 在参考基础上进行了适应性的优化和改进
+- 🔄 **集成适配**: 将参考的代码逻辑与项目现有编程语言进行集成
+
+---
+
+### 许可证合规性 / License Compliance
+
+#### 遵守情况总结
+- ✅ 保留所有原始版权声明
+- ✅ 包含完整的许可证文本副本
+- ✅ 明确说明代码参考来源
+- ✅ 遵守所有MIT许可证条款
+- ✅ 不承担原始代码质量保证责任
+
+#### 具体合规措施
+1. **版权声明保留**: 在所有参考的源代码文件中保留原始版权声明
+2. **许可证文本**: 在本文件中提供完整的许可证文本
+3. **来源标注**: 明确标注每个参考代码的来源项目
+4. **修改说明**: 如实说明对参考代码的修改情况
+
+---
+
+### 致谢 / Acknowledgments
+
+我们向以下组织和项目表示诚挚的感谢：
+
+We sincerely thank the following organizations and projects:
+
+#### .NET Foundation
+- **ASP.NET Core** - 优秀的Web应用程序框架
+- **.NET Runtime** - 强大的运行时环境
+
+#### Microsoft Corporation  
+- **OpenAPI .NET** - 完善的OpenAPI规范处理库
+- **AzureAD Team** - 专业的身份验证和授权解决方案
+
+---
+
+### 联系方式 / Contact Information
+
+如有关于开源代码参考的任何问题，请通过以下方式联系我们：
+
+If you have any questions regarding the reference of open source code, please contact us through:
+
+- 📧 项目 Issue: [https://gitcode.com/soulsoft]/issues
+- 📝 电子邮件: [1448376744@qq.com]
+
+---
