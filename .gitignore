@@ -2,16 +2,11 @@
 target/
 build/
 output/
-
-# SDK 压缩包：单个文件 385MB，超过 GitHub 的 100MB 单文件上限，推不上去。
-# 改走 GitHub Release 的附件，服务器上用 curl 下载。
-# 注意只挡 sdk/ —— Dockerfile 是源码，必须入库
-docker/sdk/
+.cache/
 
 # spire/ 和 mariadb_driver/ 以前是不入库的，靠本机路径引用。
 # 现在改成入库：许可证分别是 MIT 和 Apache 2.0，允许自由分发；
 # 而且服务器 git clone 下来就能直接编译，不用再手动拷两个目录。
-# 它们仍然在 .dockerignore 之外 —— 发布镜像编译时需要 COPY 进去。
 
 # 本地配置与密钥（从现在起就防着）
 *.local.toml
