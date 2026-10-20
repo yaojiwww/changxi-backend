@@ -1,0 +1,41 @@
+# 发布用镜像。
+#
+# 和 docker/Dockerfile 的区别：
+#   docker/Dockerfile   = 工具链镜像，源码是运行时挂进去的，每次启动都要现场编译；
+#   docker/Dockerfile.prod = 把源码 COPY 进来，在 build 阶段就编译好，
+#                            容器启动只负责 exec 二进制，启动是秒级的。
+#
+# 两个注意点：
+#   1. 它要 COPY 仓库里的 src/，所以 build context 必须是仓库根目录，
+#      不能像开发时那样用 ./docker。
+#   2. 它 FROM cangjie:1.1.3 这个工具链镜像，所以那镜像得先存在：
+#         docker compose build dev
+#
+# 目前是单阶段：直接基于工具链镜像，镜像大（~1.5G），但环境和开发时一模一样，
+# 少一层「运行时装不上库」的风险。以后要瘦身再加 runtime 阶段。
+
+FROM cangjie:1.1.3
+
+WORKDIR /app
+
+# 依赖清单 + 两个本地路径依赖。
+# cjpm.toml 里 spire 走 ${SPIRE_PATH}，mariadb 走相对路径 ./mariadb_driver，
+# 所以这两个目录必须按原位放进来，不能随便挪。
+COPY cjpm.toml cjpm.lock ./
+COPY mariadb_driver ./mariadb_driver
+COPY spire ./spire
+COPY src ./src
+
+# 编译期把 SPIRE_PATH 指到镜像里的位置（宿主机那个 /Users/... 路径在容器里不存在）
+ENV SPIRE_PATH=/app/spire/
+
+# 编译产物：/app/target/release/bin/main
+RUN cjpm build
+
+# 配置。里面的数据库密码和 JWT 密钥是开发默认值，
+# 生产环境由 compose 的 cangjie_Database__* / cangjie_Jwt__* 环境变量覆盖。
+COPY appsettings.json ./
+
+EXPOSE 5000
+
+CMD ["./target/release/bin/main"]

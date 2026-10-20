@@ -66,6 +66,11 @@ main(args: Array<String>): Int64 {
         context => handlePracticeQuestions(context, services)
     }
 
+    // ---- AI 伴学 ----
+    host.mapPost("/api/v1/ai/chat") {
+        context => handleAiChat(context, services)
+    }
+
     // 数据库探活：在启动横幅之后打一行结论，省得"服务起来了但一调接口就 500"
     // 还要去猜是不是数据库的事。
     probeDatabase(services)
@@ -85,6 +90,9 @@ func printStartupBanner(config: AppConfig) {
     serverLog("  JWT     : iss=${config.jwt.issuer} aud=${config.jwt.audience} 有效期 ${config.jwt.expiresHours}h")
     serverLog("  JWT密钥 : ${maskSecret(config.jwt.secret)}")
     serverLog("  验证码  : ${config.smsCodeExpireSeconds} 秒有效")
+    // AI 伴学的密钥来自环境变量（不是 appsettings.json，那个文件要提交），
+    // 所以"到底读到没有"只能靠开机打一行确认
+    logDifyConfig()
     serverLog("========================================")
 }
 

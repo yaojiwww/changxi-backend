@@ -1,0 +1,10 @@
+[package]
+  cjc-version = "1.1.0"
+  name = "soulsoft_extensions_logging"
+  description = "日志核心库，提供日志抽象、过滤规则和多提供者分发能力。"
+  output-type = "static"
+  version = "1.0.0"
+
+[dependencies]
+  soulsoft_extensions_options = { path = "../soulsoft_extensions_options"}
+  soulsoft_extensions_injection = { path = "../soulsoft_extensions_injection"}

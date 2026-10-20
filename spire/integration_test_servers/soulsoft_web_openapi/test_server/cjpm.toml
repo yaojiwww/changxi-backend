@@ -1,0 +1,44 @@
+[package]
+  cjc-version = "1.1.0"
+  compile-option = ""
+  description = "OpenApi Test Server"
+  link-option = ""
+  name = "soulsoft_openapi_test_server"
+  output-type = "executable"
+  override-compile-option = ""
+  src-dir = ""
+  target-dir = ""
+  version = "1.0.0"
+  package-configuration = {}
+
+[dependencies]
+  soulsoft_web_mvc = { path = "${SPIRE_PATH}soulsoft_web_mvc"}
+  soulsoft_web_http = { path = "${SPIRE_PATH}soulsoft_web_http"}
+  soulsoft_web_openapi = { path = "${SPIRE_PATH}soulsoft_web_openapi"}
+  soulsoft_net_http = { path = "${SPIRE_PATH}soulsoft_net_http"}
+  soulsoft_web_hosting = { path = "${SPIRE_PATH}soulsoft_web_hosting"}
+  soulsoft_web_cors = { path = "${SPIRE_PATH}soulsoft_web_cors"}
+  soulsoft_web_routing = { path = "${SPIRE_PATH}soulsoft_web_routing"}
+  soulsoft_extensions_injection = { path = "${SPIRE_PATH}soulsoft_extensions_injection"}
+  soulsoft_extensions_hosting = { path = "${SPIRE_PATH}soulsoft_extensions_hosting"}
+  soulsoft_extensions_options = { path = "${SPIRE_PATH}soulsoft_extensions_options"}
+  soulsoft_extensions_logging = { path = "${SPIRE_PATH}soulsoft_extensions_logging"}
+  soulsoft_extensions_configuration = { path = "${SPIRE_PATH}soulsoft_extensions_configuration"}
+  soulsoft_extensions_caching = { path = "${SPIRE_PATH}soulsoft_extensions_caching"}
+  soulsoft_identity_claims = { path = "${SPIRE_PATH}soulsoft_identity_claims"}
+  soulsoft_serialization = { path = "${SPIRE_PATH}soulsoft_serialization"}
+
+[target]
+  [target.x86_64-w64-mingw32]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -lcrypt32 -lcangjie-dynamicLoader-opensslFFI"
+    [target.x86_64-w64-mingw32.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  [target.x86_64-unknown-linux-gnu]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl -lcangjie-dynamicLoader-opensslFFI"
+    [target.x86_64-unknown-linux-gnu.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+  [target.aarch64-unknown-linux-gnu]
+    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl -lcangjie-dynamicLoader-opensslFFI"
+    [target.aarch64-unknown-linux-gnu.bin-dependencies]
+      path-option = [ "${CANGJIE_STDX_PATH}" ]
+

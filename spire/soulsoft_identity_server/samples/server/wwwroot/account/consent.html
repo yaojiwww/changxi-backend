@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>权限授权 - Soulsoft IdentityServer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f8fafa;
+            color: #1a1a1a;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #008B8B;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .logo-subtitle {
+            font-size: 14px;
+            font-weight: 400;
+            color: #666;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 30px 40px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .consent-container {
+            max-width: 780px;
+            width: 100%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .consent-card {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 26px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* Left Side - App Info */
+        .app-info-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .app-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #008B8B 0%, #00A3A3 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            box-shadow: 0 3px 12px rgba(0, 139, 139, 0.2);
+        }
+
+        .app-details h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .app-details p {
+            font-size: 12px;
+            color: #999;
+            line-height: 1.4;
+        }
+
+        /* Consent Intro */
+        .consent-intro {
+            background: linear-gradient(135deg, #f8fafa 0%, #f0f8f8 100%);
+            border: 1px solid #e0f0f0;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .consent-intro strong {
+            color: #1a1a1a;
+        }
+
+        .consent-intro strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        /* Right Side - Permissions */
+        .permissions-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Permissions */
+        .permissions-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .permission-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 18px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .permission-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background: #fafafa;
+            border-radius: 8px;
+            border: 1px solid #f0f0f0;
+            transition: all 0.2s;
+        }
+
+        .permission-item:hover {
+            background: #f5f5f5;
+            border-color: #008B8B;
+        }
+
+        .permission-item-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #008B8B 0%, #00A3A3 100%);
+            color: white;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .permission-item-content {
+            flex: 1;
+        }
+
+        .permission-item-content h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1px;
+            line-height: 1.3;
+        }
+
+        .permission-item-content p {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.3;
+        }
+
+        .permission-checkbox {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            padding-left: 12px;
+        }
+
+        .permission-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #008B8B;
+        }
+
+        .permission-checkbox input[type="checkbox"]:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Remember Section */
+        /* Buttons */
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 0;
+        }
+
+        .btn {
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #008B8B 0%, #00A3A3 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 139, 139, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 139, 139, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #666;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #fafafa;
+            border-color: #c0c0c0;
+        }
+
+        .info-text {
+            font-size: 10px;
+            color: #bbb;
+            text-align: center;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        /* Messages */
+        .error-message {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+            border: 1px solid #ffcccc;
+            color: #c53030;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            display: none;
+            text-align: center;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .info-text {
+            font-size: 11px;
+            color: #bbb;
+            text-align: center;
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .consent-card {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 24px;
+            }
+
+            .page-title {
+                font-size: 20px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="/" class="logo">SOULSOFT</a>
+                <div class="logo-subtitle">IdentityServer</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="consent-container">
+            <div class="page-header">
+                <h1 class="page-title">权限授权</h1>
+                <p class="page-subtitle">请审核应用的权限请求</p>
+            </div>
+
+            <div class="consent-card">
+                <div id="errorMessage" class="error-message"></div>
+
+                <!-- Left Side: App Info -->
+                <div class="app-info-section">
+                    <div class="app-info">
+                        <div class="app-icon" id="appIcon">A</div>
+                        <div class="app-details">
+                            <h3 id="appName">应用名称</h3>
+                            <p id="appDescription">应用描述</p>
+                        </div>
+                    </div>
+
+                    <div class="consent-intro">
+                        <strong id="appNameIntro">应用</strong> 想要访问您的以下信息。请仔细阅读权限列表，然后决定是否授权。
+                    </div>
+                </div>
+
+                <!-- Right Side: Permissions -->
+                <div class="permissions-section">
+                    <div class="permissions-label">请求的权限</div>
+                    <div class="permission-list" id="permissionList">
+                        <!-- 由 JavaScript 动态生成 -->
+                    </div>
+
+                    <!-- 隐藏表单字段 -->
+                    <form id="consentForm" method="POST" action="/account/consent" style="display: none;">
+                        <input type="hidden" id="formScope" name="scope" value="">
+                        <input type="hidden" id="formReturnUrl" name="returnUrl" value="">
+                    </form>
+
+                    <!-- 按钮组 -->
+                    <div class="button-group">
+                        <button type="button" id="acceptButton" class="btn btn-primary">
+                            授权
+                        </button>
+                        <button type="button" id="denyButton" class="btn btn-secondary">
+                            拒绝
+                        </button>
+                    </div>
+
+                    <p class="info-text">
+                        您随时可以在账户设置中撤销授权
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 从 URL 获取参数
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                returnUrl: params.get('returnUrl') || '',
+                error: params.get('error')
+            };
+        }
+
+        // 获取权限图标样式类
+        function getScopeIconClass(scopeName) {
+            return 'permission-item-icon';
+        }
+
+        // 渲染权限列表
+        function renderPermissionList(scopes) {
+            const permissionList = document.getElementById('permissionList');
+            permissionList.innerHTML = '';
+
+            if (!scopes || scopes.length === 0) {
+                const emptyItem = document.createElement('p');
+                emptyItem.style.textAlign = 'center';
+                emptyItem.style.color = '#999';
+                emptyItem.style.fontSize = '14px';
+                emptyItem.textContent = '未请求任何权限';
+                permissionList.appendChild(emptyItem);
+                return;
+            }
+
+            scopes.forEach((scope) => {
+                const item = document.createElement('div');
+                item.className = 'permission-item';
+
+                const icon = document.createElement('div');
+                icon.className = getScopeIconClass(scope.name);
+                icon.innerHTML = scope.required ? '✓' : '○';
+                icon.title = scope.required ? '必需权限' : '可选权限';
+
+                const content = document.createElement('div');
+                content.className = 'permission-item-content';
+
+                const title = document.createElement('h4');
+                title.textContent = scope.name;
+                if (scope.required) {
+                    const requiredLabel = document.createElement('span');
+                    requiredLabel.style.color = '#e53e3e';
+                    requiredLabel.style.marginLeft = '6px';
+                    requiredLabel.style.fontSize = '11px';
+                    requiredLabel.textContent = '（必需）';
+                    title.appendChild(requiredLabel);
+                }
+                content.appendChild(title);
+
+                const description = document.createElement('p');
+                description.textContent = scope.description || '无描述';
+                content.appendChild(description);
+
+                // 复选框容器 - 放在右侧
+                const checkboxContainer = document.createElement('div');
+                checkboxContainer.className = 'permission-checkbox';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `scope_${scope.name}`;
+                checkbox.value = scope.name;
+                checkbox.className = 'scope-checkbox';
+                checkbox.checked = true;
+
+                if (scope.required) {
+                    checkbox.disabled = true;
+                    checkbox.style.cursor = 'not-allowed';
+                } else {
+                    checkbox.style.cursor = 'pointer';
+                }
+
+                checkboxContainer.appendChild(checkbox);
+
+                item.appendChild(icon);
+                item.appendChild(content);
+                item.appendChild(checkboxContainer);
+                permissionList.appendChild(item);
+            });
+        }
+
+        // 显示加载状态
+        function showLoading() {
+            const permissionList = document.getElementById('permissionList');
+            permissionList.innerHTML = '<p style="text-align: center; color: #999; font-size: 14px;">加载中...</p>';
+        }
+
+        // 显示错误消息
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+        }
+
+        // 从后端 API 加载授权信息
+        async function loadAuthorizationContext() {
+            const params = getUrlParams();
+            const returnUrl = params.returnUrl;
+
+            if (!returnUrl) {
+                showError('缺少必要的返回地址参数');
+                return;
+            }
+
+            try {
+                showLoading();
+
+                const formData = new URLSearchParams();
+                formData.append('returnUrl', returnUrl);
+
+                const response = await fetch('/account/consent/data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData.toString()
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const jsonText = await response.text();
+                console.log('API Response:', jsonText);
+
+                let data;
+                try {
+                    data = JSON.parse(jsonText);
+                } catch (e) {
+                    console.error('JSON 解析错误:', e);
+                    data = eval('(' + jsonText + ')');
+                }
+
+                const clientName = data.clientName || '应用';
+                const description = data.description || '第三方应用';
+
+                document.getElementById('appName').textContent = clientName;
+                document.getElementById('appNameIntro').textContent = clientName;
+                document.getElementById('appDescription').textContent = description;
+
+                const appIcon = document.getElementById('appIcon');
+                appIcon.textContent = clientName.charAt(0).toUpperCase();
+
+                const scopes = data.scopes || [];
+                renderPermissionList(scopes);
+
+                window.consentData = {
+                    scopes: scopes,
+                    returnUrl: returnUrl,
+                    clientId: data.clientId
+                };
+
+            } catch (error) {
+                console.error('加载授权信息失败:', error);
+                showError(`加载失败: ${error.message}`);
+
+                const permissionList = document.getElementById('permissionList');
+                permissionList.innerHTML = '<p style="text-align: center; color: #e53e3e; font-size: 14px;">无法加载权限信息，请稍后重试</p>';
+            }
+        }
+
+        // 页面加载时处理
+        window.addEventListener('DOMContentLoaded', function() {
+            const params = getUrlParams();
+
+            if (params.error) {
+                showError(decodeURIComponent(params.error));
+            }
+
+            loadAuthorizationContext();
+
+            // 授权按钮事件
+            document.getElementById('acceptButton').addEventListener('click', function() {
+                if (!window.consentData) {
+                    showError('授权信息尚未加载，请稍后重试');
+                    return;
+                }
+
+                const selectedScopes = [];
+
+                window.consentData.scopes.forEach(scope => {
+                    if (scope.required) {
+                        selectedScopes.push(scope.name);
+                    }
+                });
+
+                document.querySelectorAll('.scope-checkbox:not(:disabled)').forEach(checkbox => {
+                    if (checkbox.checked) {
+                        selectedScopes.push(checkbox.value);
+                    }
+                });
+
+                const allRequiredSelected = window.consentData.scopes.every(scope => {
+                    if (scope.required) {
+                        return selectedScopes.includes(scope.name);
+                    }
+                    return true;
+                });
+
+                if (!allRequiredSelected) {
+                    showError('所有必需的权限必须授予');
+                    return;
+                }
+
+                console.log('Selected scopes:', selectedScopes.join(' '));
+
+                document.getElementById('formScope').value = selectedScopes.join(' ');
+                document.getElementById('formReturnUrl').value = window.consentData.returnUrl;
+
+                document.getElementById('consentForm').submit();
+            });
+
+            // 拒绝按钮事件
+            document.getElementById('denyButton').addEventListener('click', function() {
+                if (!window.consentData) {
+                    showError('授权信息尚未加载，请稍后重试');
+                    return;
+                }
+
+                console.log('User denied consent');
+
+                const returnUrl = window.consentData.returnUrl;
+                const url = new URL(returnUrl, window.location.origin);
+                const redirectUri = url.searchParams.get('redirect_uri');
+                const state = url.searchParams.get('state');
+                const responseMode = url.searchParams.get('response_mode');
+
+                if (!redirectUri) {
+                    showError('无法获取客户端回调地址');
+                    return;
+                }
+
+                const errorParams = new URLSearchParams();
+                errorParams.append('error', 'access_denied');
+                errorParams.append('error_description', '用户拒绝授权');
+                if (state) {
+                    errorParams.append('state', state);
+                }
+
+                let targetUrl;
+                if (responseMode === 'fragment') {
+                    targetUrl = `${redirectUri}#${errorParams.toString()}`;
+                } else {
+                    const separator = redirectUri.includes('?') ? '&' : '?';
+                    targetUrl = `${redirectUri}${separator}${errorParams.toString()}`;
+                }
+
+                window.location.href = targetUrl;
+            });
+        });
+    </script>
+</body>
+
+</html>

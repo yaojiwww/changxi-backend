@@ -1,0 +1,8 @@
+[package]
+  cjc-version = "1.1.0"
+  name = "soulsoft_extensions_objectpool"
+  description = "对象池库，支持对象复用、策略化创建与归还，以及可释放对象的自动清理。"
+  version = "1.0.0"
+  output-type = "static"
+
+[dependencies]

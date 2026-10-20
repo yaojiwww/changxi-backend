@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 ubuntu:22.04
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -9,11 +9,11 @@ RUN apt-get -o Acquire::Retries=10 -o Acquire::http::Timeout=60 update \
     && rm -rf /var/lib/apt/lists/*
 
 # --- 仓颉 SDK ---
-COPY sdk/cangjie-sdk-linux-aarch64-1.1.3.tar.gz /tmp/cangjie-sdk.tar.gz
+COPY sdk/cangjie-sdk-linux-x64-1.1.3.tar.gz /tmp/cangjie-sdk.tar.gz
 RUN tar -xzf /tmp/cangjie-sdk.tar.gz -C /opt && rm /tmp/cangjie-sdk.tar.gz
 
 # --- stdx 扩展库 ---
-COPY sdk/cangjie-stdx-linux-aarch64-1.1.3.1.zip /tmp/stdx.zip
+COPY sdk/cangjie-stdx-linux-x64-1.1.3.1.zip /tmp/stdx.zip
 RUN unzip -q /tmp/stdx.zip -d /opt/stdx && rm /tmp/stdx.zip
 
 # --- 编译所需依赖 ---
@@ -27,10 +27,10 @@ RUN apt-get -o Acquire::Retries=10 -o Acquire::http::Timeout=60 update \
 
 # 与 SDK 自带 envsetup.sh 保持一致
 ENV CANGJIE_HOME=/opt/cangjie
-ENV CANGJIE_STDX_PATH=/opt/stdx/linux_aarch64_cjnative/dynamic/stdx
+ENV CANGJIE_STDX_PATH=/opt/stdx/linux_x86_64_cjnative/dynamic/stdx
 ENV PATH=/opt/cangjie/bin:/opt/cangjie/tools/bin:/root/.cjpm/bin:$PATH
 # 注意末尾的 stdx 动态库目录：运行时需要加载 libstdx.*.so
-ENV LD_LIBRARY_PATH=/opt/cangjie/runtime/lib/linux_aarch64_cjnative:/opt/cangjie/tools/lib:/opt/stdx/linux_aarch64_cjnative/dynamic/stdx
+ENV LD_LIBRARY_PATH=/opt/cangjie/runtime/lib/linux_x86_64_cjnative:/opt/cangjie/tools/lib:/opt/stdx/linux_x86_64_cjnative/dynamic/stdx
 
 WORKDIR /app
 

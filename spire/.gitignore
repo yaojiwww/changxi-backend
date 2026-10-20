@@ -1,0 +1,27 @@
+.*
+!.gitignore
+output
+target
+*.log
+*.lock
+*.gcno
+*.gcda
+*.cj.html
+*.cj.macrocall
+
+# .NET 编译产物
+bin/
+obj/
+spire.sln
+cov_output/
+
+# 构建产物
+build/release/*
+
+# CLAUDE 相关
+CLAUDE.md
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
