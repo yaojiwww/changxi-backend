@@ -1,5 +1,5 @@
 # 构建上下文里不要的东西。
-# 注意：spire/、mysql_driver/、docker/ 是构建必需的，千万别加到这里来。
+# 注意：spire/、mariadb_driver/ 是编译必需的，千万别加到这里来。
 .git
 **/.git
 target
@@ -11,3 +11,9 @@ sql
 *.md
 docker-build.sh
 .DS_Store
+# SDK 压缩包一共 800MB，但发布镜像用的是已经装好工具链的 cangjie:1.1.3，
+# 不需要再往 build context 里传一遍。
+docker/sdk
+# 命令行版的旧代码，服务端用不上
+cli
+tools
