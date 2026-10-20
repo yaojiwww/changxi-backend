@@ -42,7 +42,15 @@ changxi-backend/                # 后端：仓颉 + Spire
 
 ## 开发与部署
 
-先用docker进行环境部署，开发时用arm的cangjie包，编译快，适合经常编译。发布时再将源码用x86_64cangjie包重新打包编译，在服务器运行。
+不使用 Docker，本机和服务器都原生运行。
+
+开发（macOS / arm64）：`cjpm run`，用 arm 版仓颉包，编译快。
+
+部署（Ubuntu 22.04 / x86_64）：
+- 仓颉 SDK 解压到 `/opt/cangjie`，扩展库 stdx 解压到 `/opt/stdx`
+- MariaDB 走 apt 装（10.6 即可，schema 里没用到 11.x 特性）
+- 编译前导出 `SPIRE_PATH`、`CANGJIE_STDX_PATH`、`LD_LIBRARY_PATH`，具体见 README
+- `spire/` 和 `mariadb_driver/` 已作为普通文件入库，clone 下来直接能编译
 
 ## 当前进度
 2026.10.12
