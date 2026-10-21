@@ -23,9 +23,9 @@ protected class MariaTransaction {
 
     private static const QUERY_AUTO_COMMIT = "SELECT @@autocommit"
 
-    private static const QUERY_ISO_LEVEL_SQL = "SELECT @@transaction_isolation"
+    private static const QUERY_ISO_LEVEL_SQL = "SELECT @@tx_isolation"
 
-    private static const QUERY_ACCESS_MODE_SQL = "SELECT @@transaction_read_only"
+    private static const QUERY_ACCESS_MODE_SQL = "SELECT @@tx_read_only"
 
     private static const START_TRANSACTION_SQL = "BEGIN"
 
@@ -39,17 +39,17 @@ protected class MariaTransaction {
 
     private static const RELEASE_SAVEPOINT_SQL = "RELEASE SAVEPOINT"
 
-    private static const CHANGE_TO_READ_UNCOMMITED_SQL = "SET SESSION transaction_isolation = 'READ-UNCOMMITTED'"
+    private static const CHANGE_TO_READ_UNCOMMITED_SQL = "SET SESSION tx_isolation = 'READ-UNCOMMITTED'"
 
-    private static const CHANGE_TO_READ_COMMITED_SQL = "SET SESSION transaction_isolation = 'READ-COMMITTED'"
+    private static const CHANGE_TO_READ_COMMITED_SQL = "SET SESSION tx_isolation = 'READ-COMMITTED'"
 
-    private static const CHANGE_TO_REPEATABLE_READ_SQL = "SET SESSION transaction_isolation = 'REPEATABLE-READ'"
+    private static const CHANGE_TO_REPEATABLE_READ_SQL = "SET SESSION tx_isolation = 'REPEATABLE-READ'"
 
-    private static const CHANGE_TO_READ_SERIALIZABLE_SQL = "SET SESSION transaction_isolation = 'SERIALIZABLE'"
+    private static const CHANGE_TO_READ_SERIALIZABLE_SQL = "SET SESSION tx_isolation = 'SERIALIZABLE'"
 
-    private static const CHANGE_TO_READ_WRITE_SQL = "SET SESSION transaction_read_only = OFF"
+    private static const CHANGE_TO_READ_WRITE_SQL = "SET SESSION tx_read_only = OFF"
 
-    private static const CHANGE_TO_READ_ONLY_SQL = "SET SESSION transaction_read_only = ON"
+    private static const CHANGE_TO_READ_ONLY_SQL = "SET SESSION tx_read_only = ON"
 
     protected let connection: MariaConnection
 

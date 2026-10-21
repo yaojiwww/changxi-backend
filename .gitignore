@@ -9,6 +9,7 @@ output/
 # 而且服务器 git clone 下来就能直接编译，不用再手动拷两个目录。
 
 # 本地配置与密钥（从现在起就防着）
+appsettings.json
 *.local.toml
 .env
 config/secret*

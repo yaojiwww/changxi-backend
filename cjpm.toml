@@ -23,20 +23,6 @@
   mariadb                       = { path = "./mariadb_driver" }
 
 [target]
- # macOS 本机开发用（Apple Silicon）。少了这一段，cjc 在 macOS 上找不到 stdx 的 .cjo，
- # 只要源码里出现 import stdx.* 就直接报「not added as a dependency」。
- [target.aarch64-apple-darwin]
-    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated"
-    [target.aarch64-apple-darwin.bin-dependencies]
-      path-option = [ "${CANGJIE_STDX_PATH}" ]
- [target.x86_64-apple-darwin]
-    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated"
-    [target.x86_64-apple-darwin.bin-dependencies]
-      path-option = [ "${CANGJIE_STDX_PATH}" ]
- [target.aarch64-unknown-linux-gnu]
-    compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
-    [target.aarch64-unknown-linux-gnu.bin-dependencies]
-      path-option = [ "${CANGJIE_STDX_PATH}" ]
  [target.x86_64-unknown-linux-gnu]
     compile-option = "-Woff unused --diagnostic-format=noColor -Woff deprecated -ldl"
     [target.x86_64-unknown-linux-gnu.bin-dependencies]
