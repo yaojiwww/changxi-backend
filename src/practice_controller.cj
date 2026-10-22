@@ -26,6 +26,10 @@ import soulsoft_web_http.*
 let QUESTIONS_DEFAULT_COUNT: Int64 = 20
 let QUESTIONS_MAX_COUNT: Int64 = 20
 
+// 每日一练固定 5 道。和前端 DailyPracticePage 的演示题数量一致：
+// 接上真接口之后，题目来源变了，但"每天 5 道"这个节奏不能变。
+let DAILY_QUESTION_COUNT: Int64 = 5
+
 // -----------------------------------------------------------------------------
 // GET /api/v1/practice/knowledge-points?tab=&level=
 //
@@ -160,6 +164,54 @@ public func handlePracticeQuestions(context: HttpContext, services: AppServices)
     // total 是知识点题库总题量（考纲题量），不是下面 questions 的长度。
     // 前端进度条和 x/N 显示的是它，所以这里必须取 knowledge_point.total。
     data.put("total", JsonInt(knowledgePoint.total))
+    data.put("questions", items)
+    writeApiOk(context.response, data)
+}
+
+// -----------------------------------------------------------------------------
+// GET /api/v1/practice/daily
+//
+// 每日一练。不带任何参数——"今天的题"由服务端决定（日期在仓储层按北京时间算），
+// 前端只负责展示，不能自己传 date/kpId 来挑题。
+//
+// 抽题规则见 QuestionRepository.pickDaily：同一天、同一用户拿到的题和顺序
+// 都是固定的，中途退出再进来不会换题。
+//
+// ★ 返回里**没有 answer**：每日一练和普通练习一样，答案不下发，
+//   判题只能走服务端（判题接口还没做，见待办）。
+// -----------------------------------------------------------------------------
+public func handleDailyPractice(context: HttpContext, services: AppServices): Unit {
+    let userOpt = authenticate(context, services)
+    if (userOpt.isNone()) {
+        return
+    }
+    let user = userOpt.getOrThrow()
+
+    let daily = services.questions.pickDaily(user.id, DAILY_QUESTION_COUNT)
+    let items = JsonArray()
+    for (question in daily.questions) {
+        let item = JsonObject()
+        item.put("questionId", JsonString(question.code))
+        item.put("stem", JsonString(question.stem))
+        // 和 /practice/questions 一样：顺序即 A/B/C/D，文案不带前缀
+        let options = JsonArray()
+        options.add(JsonString(question.optionA))
+        options.add(JsonString(question.optionB))
+        options.add(JsonString(question.optionC))
+        options.add(JsonString(question.optionD))
+        item.put("options", options)
+        item.put("knowledgePoint", JsonString(question.kpLabel))
+        items.add(item)
+    }
+
+    let data = JsonObject()
+    data.put("date", JsonString(daily.date))
+    // practiceId 暂时用「日期 + 用户」拼，同一天同一用户固定。
+    // 现在前端不调交卷接口，这个值只用来让前端区分"是不是同一次练习"；
+    // 等 batch-submit 落库之后，这里换成 practice_record.id。
+    data.put("practiceId", JsonString("daily-${daily.date}-${user.id}"))
+    // 题库为空时返回空数组而不是 1004：这是"今天确实没题"，不是请求错了。
+    // 前端拿到空数组会按自己的兜底逻辑处理（见 DailyPracticePage 的 demoMode）。
     data.put("questions", items)
     writeApiOk(context.response, data)
 }

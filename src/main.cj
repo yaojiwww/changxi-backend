@@ -65,6 +65,9 @@ main(args: Array<String>): Int64 {
     host.mapGet("/api/v1/practice/questions") {
         context => handlePracticeQuestions(context, services)
     }
+    host.mapGet("/api/v1/practice/daily") {
+        context => handleDailyPractice(context, services)
+    }
 
     // ---- AI 伴学 ----
     host.mapPost("/api/v1/ai/chat") {

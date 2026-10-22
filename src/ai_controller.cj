@@ -6,16 +6,19 @@ import soulsoft_web_http.*
 // =============================================================================
 // AI 伴学接口：POST /api/v1/ai/chat（SSE 流式）
 //
-// 请求体：{ "query": "…", "conversationId": "", "mode": "solve" }
+// 请求体：{ "query": "…", "conversationId": "", "mode": "solve", "kpId": "" }
 //   conversationId —— 首轮空串；之后前端把上一轮下发的 ID 原样带回（多轮记忆靠它）
 //   mode           —— solve(题目解答) / plan(专属规划)，作为 Dify 的 inputs.mode 传下去
+//   kpId           —— 用户当前选中的知识点（可选）。传了就必须真实存在，否则回 1004；
+//                     不传则和以前完全一样。后端会用它查出展示名，拼进 Dify 的 query
+//                     前缀和 inputs.kpName —— 检索只看 query，所以前缀不能省。
 //
 // 成功：text/event-stream，事件块之间用 LF 空行分隔，字段名照抄 Dify：
 //   data: {"event":"message","answer":"增量","conversationId":"abc"}
 //   data: {"event":"message_end","conversationId":"abc"}
 //
 // 失败分两种，分界线是"响应开写了没有"：
-//   · 开写之前（没带令牌 / query 为空 / 连不上 Dify / Dify 报 4xx）→ 统一信封
+//   · 开写之前（没带令牌 / query 为空 / kpId 不存在 / 连不上 Dify / Dify 报 4xx）→ 统一信封
 //     4xx + {code,message,data:null}。前端拿不到 SSE 事件时正是靠解析这个信封
 //     把 message 弹给用户，**空 body 会让它只剩一句"AI 没有返回任何内容"**，
 //     排查方向全歪。
@@ -64,7 +67,22 @@ public func handleAiChat(context: HttpContext, services: AppServices): Unit {
     // 空串 = 首轮，是合法输入，不是错误
     let conversationId = jsonStringOf(body, "conversationId") ?? ""
 
-    serverLog("AI 提问 user=${user.id} mode=${mode} 轮次=${if (conversationId.isEmpty()) { "首轮" } else { "续聊" }} 字数=${query.size}")
+    // 用户选中的知识点。可选字段：没传 = 通用问答，行为与以前一致。
+    // 传了就必须校验——kpId 是前端契约的一部分，拼错或用了已下架的章节时要当场报错，
+    // 而不是静默退化成"没有知识点上下文"的泛泛回答。
+    let kpId = (jsonStringOf(body, "kpId") ?? "").trimAscii()
+    var kpName = ""
+    if (!kpId.isEmpty()) {
+        match (services.knowledgePoints.findById(kpId)) {
+            case Some(record) => kpName = record.label
+            case None =>
+                writeApiError(context.response, StatusCodes.NotFound, ApiCode.NOT_FOUND,
+                    "知识点不存在")
+                return
+        }
+    }
+
+    serverLog("AI 提问 user=${user.id} mode=${mode} kp=${if (kpId.isEmpty()) { "无" } else { kpId }} 轮次=${if (conversationId.isEmpty()) { "首轮" } else { "续聊" }} 字数=${query.size}")
 
     // ③ 先连 Dify，再开流 —— 顺序不能反。
     //
@@ -78,7 +96,7 @@ public func handleAiChat(context: HttpContext, services: AppServices): Unit {
     //   表达式的开头，编译器只能猜（并报 "possibly confusing line terminator"）。
     //   猜对了是"提前返回"，猜错了就是"返回 startSseResponse(...) 的结果"——
     //   整个流式循环被静默跳过。显式写成 if 就没有这种余地。
-    let difyOpt = openDifyStream(context, query, conversationId, mode, user.id.toString())
+    let difyOpt = openDifyStream(context, query, conversationId, mode, kpName, user.id.toString())
     if (difyOpt.isNone()) {
         return   // 失败时 openDifyStream 已经把信封写好了
     }

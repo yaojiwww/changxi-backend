@@ -348,6 +348,46 @@ public class KnowledgePointRepository {
 }
 
 // =============================================================================
+// 每日一练：跨知识点抽题
+//
+// 和 QUESTION_SELECT_COLUMNS 的区别：
+//   ① 多 join 了 knowledge_point，为了拿到 label（"初级 · 组织饮水"）。
+//      每日题来自不同章节，每道题的展示名都不一样，不能像 /practice/questions
+//      那样在接口层统一用同一个知识点的 label；
+//   ② ★ 故意不查 answer / explanation。每日一练的响应里绝不能出现答案，
+//      这里连查都不查，比"查出来但接口层记得别放进去"可靠。
+//
+// 常量放在 QuestionRepository 之前是硬要求：仓颉的顶层 let 按源码顺序生效，
+// 写在后面会报 "used before being defined"。
+// =============================================================================
+
+let DAILY_QUESTION_SELECT_COLUMNS: String =
+    "select q.code, q.kp_id, k.label, q.stem, q.option_a, q.option_b, q.option_c, q.option_d, q.q_type " +
+    "from question q join knowledge_point k on k.kp_id = q.kp_id " +
+    "where q.status = 1 "
+
+// 每日一练里的一道题。字段是前端 DailyQuestionItem 契约的子集，没有 answer 和 explanation。
+public class DailyQuestionRecord {
+    public var code: String = ""
+    public var kpId: String = ""
+    public var kpLabel: String = ""
+    public var stem: String = ""
+    public var optionA: String = ""
+    public var optionB: String = ""
+    public var optionC: String = ""
+    public var optionD: String = ""
+    public var qType: String = "single"
+}
+
+// 一天的一练：日期 + 当天的题。
+// date 由数据库算出并原样下发，保证"哪一天"只有一个出处，不会出现
+// 应用层和数据库各算一遍、跨天时差一天的情况。
+public class DailyPracticeRecord {
+    public var date: String = ""
+    public var questions: Array<DailyQuestionRecord> = []
+}
+
+// =============================================================================
 // 题库：题目
 // =============================================================================
 
@@ -415,6 +455,70 @@ public class QuestionRepository {
             result.close()
             statement.close()
             return records.toArray()
+        } finally {
+            connection.close()
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // 每日一练
+    // -------------------------------------------------------------------------
+
+    // 数据库里的"今天"（北京时间）。
+    // 为什么让数据库算：服务器 TZ 虽然是 Asia/Shanghai，但代码里拿时间一律走
+    // nowUTC()，如果在应用层手写 +8 再拼日期，跨月、跨年各要处理一次，写错了
+    // 就是"每天凌晨 0 点到 8 点抽到前一天的题"。这里用 utc_timestamp() 显式 +8，
+    // 规则只有一句，而且接口下发的 date 和抽题用的种子是**同一个值**。
+    private func currentDateText(connection: Connection): String {
+        let statement = connection.prepareStatement(
+            "select date_format(date_add(utc_timestamp(), interval 8 hour), '%Y-%m-%d')")
+        let result = statement.query()
+        let text = if (result.next()) { result.getOrNull<String>(1) ?? "" } else { "" }
+        result.close()
+        statement.close()
+        return text
+    }
+
+    // 抽当天的一套题：同一天、同一用户，题目和顺序都固定。
+    //
+    // 为什么不用 order by rand()：
+    //   用户可能中途退出再进来。每次重抽的话"每日一练"就成了"每次一套新题"，
+    //   用户刚做过的题会对不上，体验很怪。这里用 md5(题目code + 日期 + 用户ID)
+    //   当排序键——输入不变，结果就不变，等价于"带种子的随机"。
+    //   混进用户 ID 是为了让不同用户拿到的题不完全一样，避免同一时刻所有人
+    //   都在读同一批热点行；如果产品希望所有人今天做同一套，把第二个参数去掉即可。
+    //
+    // limit 拼进 SQL 的理由同 pickRandom：count 由接口层保证是正整数。
+    public func pickDaily(userId: Int64, count: Int64): DailyPracticeRecord {
+        let connection = database.connection()
+        try {
+            let date = currentDateText(connection)
+            let statement = connection.prepareStatement(
+                DAILY_QUESTION_SELECT_COLUMNS + "order by md5(concat(q.code, ?, '-', ?)) limit ${count}")
+            statement.set(1, date)
+            statement.set(2, userId)
+            let result = statement.query()
+            let questions = ArrayList<DailyQuestionRecord>()
+            while (result.next()) {
+                let item = DailyQuestionRecord()
+                item.code = result.getOrNull<String>(1) ?? ""
+                item.kpId = result.getOrNull<String>(2) ?? ""
+                item.kpLabel = result.getOrNull<String>(3) ?? ""
+                item.stem = result.getOrNull<String>(4) ?? ""
+                item.optionA = result.getOrNull<String>(5) ?? ""
+                item.optionB = result.getOrNull<String>(6) ?? ""
+                item.optionC = result.getOrNull<String>(7) ?? ""
+                item.optionD = result.getOrNull<String>(8) ?? ""
+                item.qType = result.getOrNull<String>(9) ?? "single"
+                questions.add(item)
+            }
+            result.close()
+            statement.close()
+
+            let record = DailyPracticeRecord()
+            record.date = date
+            record.questions = questions.toArray()
+            return record
         } finally {
             connection.close()
         }

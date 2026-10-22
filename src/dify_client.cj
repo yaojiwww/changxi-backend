@@ -25,8 +25,13 @@ import soulsoft_web_http.*
 //
 // 接口：POST <base>/chat-messages
 //   Header: Authorization: Bearer <API Key>
-//   Body:   { "inputs": {"mode": "…"}, "query": "…", "response_mode": "streaming",
-//             "conversation_id": "…", "user": "<用户 id>" }
+//   Body:   { "inputs": {"mode": "…", "kpName": "…"}, "query": "…",
+//             "response_mode": "streaming", "conversation_id": "…", "user": "<用户 id>" }
+//
+// ★ 关于知识库检索：Dify 的检索只拿 query 字段去匹配，inputs 里的变量只进 prompt、
+//   不参与检索。所以用户选中知识点时，除了放进 inputs.kpName 给 prompt 用，
+//   还必须把章节名拼到 query 前面（见 buildDifyQuery），否则知识库检索仍然是
+//   "拿用户原话去碰"，命中率不会因为选了章节而变化。
 //
 // 为什么 response_mode 一定是 streaming：Dify 的「智能体」类型应用只支持 streaming，
 // blocking 会直接返回 400。对 Chatbot / Chatflow 也都兼容。
@@ -108,13 +113,33 @@ func logDifyConfig(): Unit {
     }
 }
 
+// —— 拼给 Dify 的 query ——
+//
+// 用户选了知识点时，把章节名顶在问题前面。这不是给模型看的装饰，而是为了让
+// Dify 的知识库检索能"落在这一章里"：检索用的是完整 query，只把章节名塞进
+// inputs 的话，向量检索根本看不到它。
+//
+// 用中文方括号包起来，是为了和用户自己的话区分开——用户原话里几乎不会出现
+// 这个形状，prompt 那边也容易写"忽略【当前知识点：…】这行标记本身"。
+func buildDifyQuery(query: String, kpName: String): String {
+    if (kpName.isEmpty()) {
+        return query
+    }
+    return "【当前知识点：${kpName}】\n${query}"
+}
+
 // —— 拼请求体 ——
 // 用 JsonObject 而不是手拼字符串：query 里的引号、换行、中文都会被正确转义。
-func difyChatBody(query: String, conversationId: String, mode: String, user: String): String {
+func difyChatBody(query: String, conversationId: String, mode: String,
+                  kpName: String, user: String): String {
     let inputs = JsonObject()
     // mode 由前端传下来，Dify 那边拿它做分支（题目解答 / 专属规划）。
     // Dify 侧没定义这个变量时会被忽略，不影响提问本身。
     inputs.put("mode", JsonString(mode))
+    // 选中知识点的展示名（如「中级 · 组织进餐」）。没有选中时是空串——
+    // 照样传，让 Dify 侧永远拿得到这个变量，prompt 里判断空串即可，
+    // 不用处理"变量不存在"和"变量为空"两种状态。
+    inputs.put("kpName", JsonString(kpName))
 
     let body = JsonObject()
     body.put("inputs", inputs)
@@ -205,7 +230,7 @@ func closeDifyStream(stream: DifyStream): Unit {
 //   代价是每轮问答多一次 TLS 握手。等真机上量了再考虑连接池，现在不值得。
 // =============================================================================
 func openDifyStream(context: HttpContext, query: String, conversationId: String,
-                    mode: String, userId: String): ?DifyStream {
+                    mode: String, kpName: String, userId: String): ?DifyStream {
     let apiKey = match (readDifyApiKey()) {
         case Some(key) => key
         case None =>
@@ -232,7 +257,7 @@ func openDifyStream(context: HttpContext, query: String, conversationId: String,
         .url("${base}/chat-messages")
         .header("Authorization", "Bearer ${apiKey}")
         .header("Content-Type", "application/json")
-        .body(difyChatBody(query, conversationId, mode, userId))
+        .body(difyChatBody(buildDifyQuery(query, kpName), conversationId, mode, kpName, userId))
         .build()
 
     let response = try {
